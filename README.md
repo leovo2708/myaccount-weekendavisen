@@ -25,3 +25,19 @@ Before running the tests make sure you are serving the app via `ng serve`.
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Docker environment
+There is an issue with `ng cli` inside docker container. Symlinked node_modules folder is not working for
+this project (ng serve throws an error at the last step). To solve it we could use only shared `src` folder and symlink it
+to the unshared project folder (already inside docker image).
+
+```
+docker-compose build & docker-compose up -d
+docker exec -it myaccount bash
+ln -s /srv/myaccount/src /srv/myaccount-server/
+cd /srv/myaccount-server
+git pull
+npm install
+ng serve --host 0.0.0.0
+```
+
