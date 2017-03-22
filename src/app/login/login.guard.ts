@@ -6,10 +6,10 @@ import {
 } from '@angular/router';
 
 import { UserService } from '../user/user.service';
-import { UserStore } from '../user/user.store';
+import { UserStore } from '../store/user.store';
 import { GetAccountInfoResponse } from '../gigya/accounts/index';
 import { Observable } from 'rxjs/Observable';
-import { LoginStore } from './login.store';
+import { LoginStore } from '../store/login.store';
 
 @Injectable()
 export class LoginGuard implements CanActivate {
@@ -27,7 +27,7 @@ export class LoginGuard implements CanActivate {
           return true;
         }
 
-        this.loginStore.setRedirectionUrl(state.url);
+        this.loginStore.redirectionUrl = state.url;
         this.router.navigate(['/login']);
 
         return false;

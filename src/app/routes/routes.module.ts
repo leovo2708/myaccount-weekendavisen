@@ -4,10 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { LoginGuard } from '../login/login.guard';
 import { LogoutGuard } from '../login/logout.guard';
-import { UserStore } from '../user/user.store';
 import { UserService } from '../user/user.service';
 import { LoginComponent } from '../login/login.component';
-import { LoginStore } from '../login/login.store';
 import { NotFoundComponent } from '../not-found/not-found.component';
 
 const routes: Routes = [
@@ -36,9 +34,7 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     LoginGuard,
-    LoginStore,
     LogoutGuard,
-    UserStore,
     UserService
   ]
 })

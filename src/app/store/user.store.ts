@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Rx';
 
-import { UserService } from './user.service';
+import { UserService } from '../user/user.service';
 import { GetAccountInfoResponse } from '../gigya/accounts';
 
 @Injectable()

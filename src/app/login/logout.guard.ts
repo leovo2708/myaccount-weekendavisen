@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 
 import { UserService } from '../user/user.service';
-import { UserStore } from '../user/user.store';
+import { UserStore } from '../store/user.store';
 import { GetAccountInfoResponse } from '../gigya/accounts/index';
 import { Observable } from 'rxjs/Observable';
 

@@ -11,6 +11,7 @@ import { AppRoutingModule } from './routes/routes.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { StoreModule } from './store/store.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    MaterialModule
+    MaterialModule,
+    StoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]
