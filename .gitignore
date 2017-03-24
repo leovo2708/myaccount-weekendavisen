@@ -39,3 +39,9 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
+
+config.sh
+
+src/config.ts
+
+backend/dist

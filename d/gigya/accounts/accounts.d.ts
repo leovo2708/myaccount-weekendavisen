@@ -1,4 +1,4 @@
-import { Events } from '../events';
+import { Events } from '../events/events';
 import { Response } from '../socialize/response';
 
 import { CustomButton } from './customButton';
@@ -10,7 +10,7 @@ declare interface DictionaryDefinition {
   [key: string]: string;
 }
 
-export interface AccountsShowScreenSet extends Events {
+export interface ShowScreenSetParams extends Events {
   screenSet: string;
   containerID?: string;
   authFlow?: string;
@@ -53,7 +53,7 @@ export interface LoginID {
   unverifiedEmails: string[];
 }
 
-export interface GetAccountInfoResponse extends Response {
+export interface AccountInfo extends Response {
   UID?: string;
   UIDSignature?: string;
   signatureTimestamp?: string;
@@ -85,10 +85,10 @@ export interface GetAccountInfoResponse extends Response {
   verifiedTimestamp?: string;
 }
 
-export interface AccountsGetAccountInfoParams {
+export interface GetAccountInfoParams {
   include?: string;
   extraProfileFields?: string;
-  callback?: (response: GetAccountInfoResponse) => void;
+  callback?: (response: AccountInfo) => void;
   cid?: string;
   context?: {};
 }
@@ -103,6 +103,6 @@ export interface EventHandlers {
 
 export interface Accounts {
   addEventHandlers(handlers: EventHandlers): void;
-  getAccountInfo(params: AccountsGetAccountInfoParams): void;
-  showScreenSet(params: AccountsShowScreenSet): void;
+  getAccountInfo(params: GetAccountInfoParams): void;
+  showScreenSet(params: ShowScreenSetParams): void;
 }

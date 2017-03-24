@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { LoginStore } from '../store/login.store';
 import { UserStore } from '../store/user.store';
-import { GetAccountInfoResponse } from '../gigya/accounts/index';
-import { UserService } from '../user/user.service';
+import { UserTicket } from '../../../d/http/bpc';
+import { UserService } from '../core/user.service';
 
 @Component({
   selector: 'app-login',
@@ -15,18 +16,17 @@ export class LoginComponent implements OnInit {
 
   constructor(private loginStore: LoginStore,
               private router: Router,
+              private userService: UserService,
               private userStore: UserStore) { }
 
   ngOnInit(): void {
-    this.userStore.user.subscribe((userInfo: GetAccountInfoResponse) => {
-      if (userInfo !== null) {
-        if (UserService.isLoggedIn(userInfo)) {
+    this.userStore.userTicket.then((userTicket: UserTicket) => {
+      if (userTicket) {
+        this.redirect();
+      } else {
+        this.userService.logIn(this.containerID).then(() => {
           this.redirect();
-        } else {
-          this.userStore.logIn(this.containerID).then(() => {
-            this.redirect();
-          });
-        }
+        });
       }
     });
   }
