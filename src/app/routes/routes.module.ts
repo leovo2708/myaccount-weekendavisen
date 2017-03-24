@@ -3,20 +3,20 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { LoginGuard } from '../login/login.guard';
-import { LogoutGuard } from '../login/logout.guard';
 import { UserService } from '../user/user.service';
 import { LoginComponent } from '../login/login.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
+import { RootComponent } from '../root/root.component';
 
 const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [LogoutGuard]
   },
   {
     path: '',
     canActivate: [LoginGuard],
+    component: RootComponent,
     children: [
       {path: 'dashboard', component: DashboardComponent},
       {path: '404', component: NotFoundComponent},
@@ -34,7 +34,6 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     LoginGuard,
-    LogoutGuard,
     UserService
   ]
 })

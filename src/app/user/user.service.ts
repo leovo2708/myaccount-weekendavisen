@@ -5,16 +5,16 @@ import { LoginEvent } from '../gigya/events/loginEvent';
 declare const gigya: Gigya;
 
 export class UserService {
+  static isLoggedIn(userInfo: GetAccountInfoResponse): boolean {
+    return userInfo.errorCode === 0;
+  }
+
   getUser(): Promise<GetAccountInfoResponse> {
     return new Promise((fulfill: Function): void => {
       gigya.accounts.getAccountInfo({
         callback: (response: GetAccountInfoResponse): void => fulfill(response)
       });
     });
-  }
-
-  isLoggedIn(userInfo: GetAccountInfoResponse): boolean {
-    return userInfo.errorCode === 0;
   }
 
   logIn(containerID?: string): Promise<LoginEvent> {

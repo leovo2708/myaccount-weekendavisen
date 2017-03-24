@@ -16,14 +16,21 @@ export class LoginGuard implements CanActivate {
   constructor(
     private loginStore: LoginStore,
     private router: Router,
-    private userService: UserService,
     private userStore: UserStore) {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.userStore.user
       .map((response: GetAccountInfoResponse) => {
-        if (this.userService.isLoggedIn(response)) {
+        if (response === null) {
+          this.userStore.onUserData(() => {
+            this.router.navigate([state.url]);
+          });
+
+          return false;
+        }
+
+        if (UserService.isLoggedIn(response)) {
           return true;
         }
 

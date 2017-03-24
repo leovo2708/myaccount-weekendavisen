@@ -12,6 +12,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { StoreModule } from './store/store.module';
+import { RootComponent } from './root/root.component';
+
+import 'hammerjs';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,8 @@ import { StoreModule } from './store/store.module';
     TopBarComponent,
     DashboardComponent,
     LoginComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    RootComponent
   ],
   imports: [
     AppRoutingModule,
