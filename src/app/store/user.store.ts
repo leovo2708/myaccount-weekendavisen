@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/Rx';
-import { clone } from 'lodash/lang';
 
 import { UserService } from '../core/user.service';
 import { AccountInfo } from '../../../d/gigya/accounts/accounts';
@@ -43,6 +42,6 @@ export class UserStore {
 
   getParamsWithUserTicket(params?: any): Observable<any> {
     return this._userTicket
-      .map((userTicket: UserTicket) => clone({userTicket}, params));
+      .map((userTicket: UserTicket) => Object.assign({userTicket}, params));
   }
 }

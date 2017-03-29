@@ -65,7 +65,6 @@ export class BPC {
       })
       .catch((err: Error) => {
         console.error(err);
-        process.exit(1);
       });
   }
 
@@ -84,7 +83,6 @@ export class BPC {
         })
         .catch((err: Error) => {
           console.error(err);
-          process.exit(1);
         });
     }, expires - Date.now());
   }

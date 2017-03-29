@@ -2,6 +2,7 @@ import * as Hawk from 'hawk';
 import * as request from 'request';
 import { resolve } from 'url';
 import { IncomingMessage } from 'http';
+import { Headers } from 'request';
 
 import { UserTicket } from '../../d/http/bpc';
 
@@ -28,7 +29,7 @@ export class Http {
 
   static call(method: string, path: string, payload: any, credentials?: UserTicket): Promise<any> {
     const uri: string = resolve(process.env.POC_APPLICATION_SSO_URL, path);
-    const headers: any = {
+    const headers: Headers = {
       ['Content-Type']: 'application/json'
     };
 
