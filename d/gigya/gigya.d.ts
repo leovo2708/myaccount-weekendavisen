@@ -1,4 +1,4 @@
-import { Accounts } from './accounts';
+import { Accounts } from './accounts/accounts';
 
 export interface Gigya {
   accounts: Accounts;

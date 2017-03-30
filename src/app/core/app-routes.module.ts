@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { LoginGuard } from '../login/login.guard';
-import { UserService } from '../user/user.service';
+import { UserService } from './user.service';
 import { LoginComponent } from '../login/login.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { RootComponent } from '../root/root.component';
@@ -37,5 +37,5 @@ const routes: Routes = [
     UserService
   ]
 })
-export class AppRoutingModule {
+export class AppRoutesModule {
 }

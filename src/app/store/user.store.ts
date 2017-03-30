@@ -2,40 +2,46 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/Rx';
 
-import { UserService } from '../user/user.service';
-import { GetAccountInfoResponse } from '../gigya/accounts';
-import { LoginEvent } from '../gigya/events/loginEvent';
+import { UserService } from '../core/user.service';
+import { AccountInfo } from '../../../d/gigya/accounts/accounts';
+import { UserTicket } from '../../../d/http/bpc';
 
 @Injectable()
 export class UserStore {
-  private _user: BehaviorSubject<GetAccountInfoResponse> = new BehaviorSubject<GetAccountInfoResponse>(null);
+  private _user: BehaviorSubject<AccountInfo> = new BehaviorSubject<AccountInfo>(null);
+  private _userTicket: BehaviorSubject<UserTicket> = new BehaviorSubject<UserTicket>(null);
 
   constructor(private userService: UserService) {
-    this.loadInitialData();
   }
 
-  get user(): Observable<GetAccountInfoResponse> {
+  get user(): Observable<AccountInfo> {
     return this._user.asObservable();
   }
 
-  loadInitialData(): void {
-    this.userService.getUser()
-      .then((response: GetAccountInfoResponse) => {
-        this._user.next(response);
+  get userTicket(): Promise<UserTicket> {
+    if (this._userTicket.getValue()) {
+      return Promise.resolve(this._userTicket.getValue());
+    }
+
+    return this.userService.getUser()
+      .then((accountInfo: AccountInfo) => {
+        this._user.next(accountInfo);
+
+        if (UserService.isLoggedIn(accountInfo)) {
+          return this.userService.getUserTicket(accountInfo)
+            .then((userTicket: UserTicket) => {
+              this._userTicket.next(userTicket);
+
+              return userTicket;
+            });
+        }
+
+        return null;
       });
   }
 
-  logIn(containerID?: string): Promise<LoginEvent> {
-    return this.userService.logIn(containerID).then(() => {
-      this.loadInitialData();
-    });
-  }
-
-  onUserData(callback: Function): void {
-    this.user.subscribe((userInfo: GetAccountInfoResponse) => {
-      if (userInfo !== null) {
-        callback(userInfo);
-      }
-    });
+  getParamsWithUserTicket(params?: any): Observable<any> {
+    return this._userTicket
+      .map((userTicket: UserTicket) => Object.assign({userTicket}, params));
   }
 }

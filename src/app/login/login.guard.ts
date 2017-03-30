@@ -1,42 +1,31 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import {
-  CanActivate, Router,
+  CanActivate,
   ActivatedRouteSnapshot,
-  RouterStateSnapshot
+  RouterStateSnapshot, Router
 } from '@angular/router';
 
-import { UserService } from '../user/user.service';
-import { UserStore } from '../store/user.store';
-import { GetAccountInfoResponse } from '../gigya/accounts/index';
-import { Observable } from 'rxjs/Observable';
 import { LoginStore } from '../store/login.store';
+import { UserStore } from '../store/user.store';
+import { UserTicket } from '../../../d/http/bpc';
 
 @Injectable()
 export class LoginGuard implements CanActivate {
-  constructor(
-    private loginStore: LoginStore,
-    private router: Router,
-    private userStore: UserStore) {
+  constructor(private loginStore: LoginStore,
+              private router: Router,
+              private userStore: UserStore) {
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.userStore.user
-      .map((response: GetAccountInfoResponse) => {
-        if (response === null) {
-          this.userStore.onUserData(() => {
-            this.router.navigate([state.url]);
-          });
-
-          return false;
-        }
-
-        if (UserService.isLoggedIn(response)) {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    return this.userStore.userTicket
+      .then((userTicket: UserTicket) => {
+        if (userTicket) {
           return true;
         }
 
         this.loginStore.redirectionUrl = state.url;
         this.router.navigate(['/login']);
-
         return false;
       });
   }
