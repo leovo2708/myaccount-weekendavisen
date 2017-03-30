@@ -1,0 +1,31 @@
+<div>
+  <a routerLink="/orders">
+    <md-icon>arrow_back</md-icon>
+  </a>
+</div>
+<h3>
+  Order <span *ngIf="order">#{{order.sap_order_id}}</span>
+</h3>
+
+<md-card class="order-card" *ngIf="order">
+  <md-card-header>
+    <md-card-title>{{order.product_family}}</md-card-title>
+    <md-card-subtitle>{{order.sap_order_id}}</md-card-subtitle>
+  </md-card-header>
+  <md-card-content>
+    <strong>Delivery Address:</strong>
+    <div class="address">{{order.delivery_address}}</div>
+
+    <div *ngIf="order.transactions.length">
+      <strong>Transactions:</strong>
+      <table>
+        <thead>
+        <tr>
+          <th></th>
+        </tr>
+        </thead>
+      </table>
+    </div>
+
+  </md-card-content>
+</md-card>

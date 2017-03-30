@@ -1,0 +1,20 @@
+<h3>Orders</h3>
+
+<div *ngIf="orders && !orders.length">
+  You don't have any orders.
+</div>
+<div *ngIf="orders && orders.length">
+  <md-card *ngFor="let order of orders" class="order-card">
+    <md-card-header>
+      <md-card-title>{{order.product_family}}</md-card-title>
+      <md-card-subtitle>{{order.sap_order_id}}</md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      <strong>Delivery Address:</strong>
+      <div class="address">{{order.delivery_address}}</div>
+    </md-card-content>
+    <md-card-actions class="actions">
+      <button md-raised-button [routerLink]="['/orders', order.sap_order_id]">MORE...</button>
+    </md-card-actions>
+  </md-card>
+</div>

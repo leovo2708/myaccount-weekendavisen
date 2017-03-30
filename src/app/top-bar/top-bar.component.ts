@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UserStore } from '../store/user.store';
+import { Router } from '@angular/router';
+
 import { AccountInfo } from '../../../d/gigya/accounts/accounts';
+import { AuthStore } from '../store/auth.store';
+import { AuthService } from '../core/auth.service';
 
 @Component({
   selector: 'app-top-bar',
@@ -10,16 +13,21 @@ import { AccountInfo } from '../../../d/gigya/accounts/accounts';
 export class TopBarComponent implements OnInit {
   accountInfo: AccountInfo;
 
-  constructor(private userStore: UserStore) { }
+  constructor(private router: Router,
+              private authService: AuthService,
+              private authStore: AuthStore) {
+  }
 
   ngOnInit(): void {
-    this.userStore.user
-      .subscribe((accountInfo: AccountInfo) => {
-        this.accountInfo = accountInfo;
-      });
+    this.accountInfo = this.authStore.authTicket.accountInfo;
+  }
+
+  get thumbnailURL(): string {
+    return this.accountInfo && this.accountInfo.profile && this.accountInfo.profile.thumbnailURL;
   }
 
   logOut(): void {
-    console.log('log out!');
+    this.authService.logOut()
+      .catch((err: Error) => console.log(err));
   }
 }

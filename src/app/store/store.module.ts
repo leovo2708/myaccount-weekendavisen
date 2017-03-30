@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
+
+import { AuthStore } from './auth.store';
 import { LoginStore } from './login.store';
-import { UserStore } from './user.store';
 
 @NgModule({
   providers: [
-    LoginStore,
-    UserStore
+    AuthStore,
+    LoginStore
   ]
 })
 export class StoreModule {

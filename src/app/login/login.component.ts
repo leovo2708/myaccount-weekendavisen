@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { LoginStore } from '../store/login.store';
-import { UserStore } from '../store/user.store';
-import { UserTicket } from '../../../d/http/bpc';
 import { UserService } from '../core/user.service';
+import { AuthStore } from '../store/auth.store';
+import { AuthService } from '../core/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -17,11 +17,16 @@ export class LoginComponent implements OnInit {
   constructor(private loginStore: LoginStore,
               private router: Router,
               private userService: UserService,
-              private userStore: UserStore) { }
+              private authService: AuthService,
+              private authStore: AuthStore) {
+  }
 
   ngOnInit(): void {
-    this.userStore.userTicket.then((userTicket: UserTicket) => {
-      if (userTicket) {
+    // TODO: instead of synchronous ticket fetch here, we should do the same as
+    // in LoginGuard, since the login.component is not guarded and therefore the
+    // jwt token is not initialized (is null).
+    this.authService.jwt.then((jwt: string) => {
+      if (jwt) {
         this.redirect();
       } else {
         this.userService.logIn(this.containerID).then(() => {

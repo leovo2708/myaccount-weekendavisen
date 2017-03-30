@@ -101,8 +101,16 @@ export interface EventHandlers {
   context?: {};
 }
 
+export interface LogoutParams {
+  callback?: (response: Response) => void;
+  cid?: string;
+  forceProvidersLogout?: boolean;
+  context?: {};
+}
+
 export interface Accounts {
   addEventHandlers(handlers: EventHandlers): void;
   getAccountInfo(params: GetAccountInfoParams): void;
   showScreenSet(params: ShowScreenSetParams): void;
+  logout(params: LogoutParams): void;
 }

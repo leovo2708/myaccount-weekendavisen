@@ -4,31 +4,37 @@ import { resolve } from 'url';
 import { IncomingMessage } from 'http';
 import { Headers } from 'request';
 
-import { UserTicket } from '../../d/http/bpc';
+import { BaseTicket } from '../../d/bpc';
 
 export class Http {
-  static get(path: string, params: any, credentials?: UserTicket): Promise<any> {
-    return Http.call('GET', path, params, credentials);
+  apiUrl: string;
+
+  constructor(apiUrl: string) {
+    this.apiUrl = apiUrl;
   }
 
-  static post(path: string, payload: any, credentials?: UserTicket): Promise<any> {
-    return Http.call('POST', path, payload, credentials);
+  get(path: string, params?: any, credentials?: BaseTicket): Promise<any> {
+    return this.call('GET', path, params, credentials);
   }
 
-  static put(path: string, payload: any, credentials?: UserTicket): Promise<any> {
-    return Http.call('PUT', path, payload, credentials);
+  post(path: string, payload?: any, credentials?: BaseTicket): Promise<any> {
+    return this.call('POST', path, payload, credentials);
   }
 
-  static patch(path: string, payload: any, credentials?: UserTicket): Promise<any> {
-    return Http.call('PATCH', path, payload, credentials);
+  put(path: string, payload?: any, credentials?: BaseTicket): Promise<any> {
+    return this.call('PUT', path, payload, credentials);
   }
 
-  static delete(path: string, payload: any, credentials?: UserTicket): Promise<any> {
-    return Http.call('DELETE', path, payload, credentials);
+  patch(path: string, payload?: any, credentials?: BaseTicket): Promise<any> {
+    return this.call('PATCH', path, payload, credentials);
   }
 
-  static call(method: string, path: string, payload: any, credentials?: UserTicket): Promise<any> {
-    const uri: string = resolve(process.env.POC_APPLICATION_SSO_URL, path);
+  delete(path: string, payload?: any, credentials?: BaseTicket): Promise<any> {
+    return this.call('DELETE', path, payload, credentials);
+  }
+
+  call(method: string, path: string, payload?: any, credentials?: BaseTicket): Promise<any> {
+    const uri: string = resolve(this.apiUrl, path);
     const headers: Headers = {
       ['Content-Type']: 'application/json'
     };

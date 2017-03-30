@@ -1,9 +1,12 @@
 import { Server } from 'hapi';
 import * as Inert from 'inert';
+import * as hapiAuthJwt2 from 'hapi-auth-jwt2';
 
-import Ticket from './routes/ticket';
-import User from './routes/user';
-import { BPC } from './bpc';
+import { BPC } from './user/bpc';
+import kundeuniversPlugin from './kundeunivers/kundeunivers.plugin';
+import userPlugin from './user/user.plugin';
+import { preResponseExtension } from './pre-response.extension';
+import { authConfig } from './jwt';
 
 const application: Server = new Server({
   connections: {
@@ -21,11 +24,20 @@ function cb(err: Error): void {
 }
 
 application.connection({port: process.env.PORT || 8000});
-application.register(Inert, () => {
-});
+application.ext('onPreResponse', preResponseExtension);
 
-application.register(Ticket, <any>{routes: {prefix: '/ticket'}}, cb);
-application.register(User, <any>{routes: {prefix: '/user'}}, cb);
+application.register(hapiAuthJwt2, (err: Error) => {
+  if (err) {
+    console.log(err);
+  }
+
+  application.auth.strategy('jwt', 'jwt', authConfig);
+  application.auth.default('jwt');
+
+  application.register(Inert, () => null);
+  application.register(kundeuniversPlugin, <any>{routes: {prefix: '/kundeunivers'}}, cb);
+  application.register(userPlugin, <any>{routes: {prefix: '/user'}}, cb);
+});
 
 application.start((err: Error) => {
   if (err) {
