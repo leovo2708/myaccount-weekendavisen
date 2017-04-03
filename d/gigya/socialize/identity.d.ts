@@ -1,0 +1,60 @@
+declare interface MappedProvider {
+  providerUID: string;
+  apiKey: string;
+}
+
+export interface Identity {
+  provider?: string;
+  providerUID?: string;
+  providerUIDSig?: string;
+  mappedProviderUIDs?: MappedProvider[];
+  isLoginIdentity?: boolean;
+  nickname?: string;
+  allowsLogin?: boolean;
+  isExpiredSession?: boolean;
+  lastLoginTime?: number;
+  photoURL?: string;
+  thumbnailURL?: string;
+  firstName?: string;
+  lastName?: string;
+  gender?: string;
+  age?: number;
+  birthDay?: number;
+  birthMonth?: number;
+  birthYear?: number;
+  email?: string;
+  country?: string;
+  state?: string;
+  city?: string;
+  zip?: string;
+  profileURL?: string;
+  languages?: string;
+  address?: string;
+  phones?: string[];
+  education?: string[];
+  honors?: string;
+  publications?: string[];
+  patents?: string[];
+  certifications?: string[];
+  professionalHeadline?: string;
+  bio?: string;
+  industry?: string;
+  specialties?: string;
+  work?: string[];
+  skills?: string[];
+  religion?: string;
+  politicalView?: string;
+  interestedIn?: string;
+  relationshipStatus?: string;
+  hometown?: string;
+  favorites?: string[];
+  likes?: string[];
+  followersCount?: number;
+  followingCount?: number;
+  username?: string;
+  locale?: string;
+  verified?: boolean;
+  timezone?: string;
+  missingPermissions?: string;
+  samlData?: {};
+}
