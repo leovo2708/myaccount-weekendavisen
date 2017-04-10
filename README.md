@@ -1,5 +1,7 @@
 # MyaccountWeekendavisen
 
+[Confluence page](https://berlingskemedia.atlassian.net/wiki/display/UT/MyAccount+SSO+app)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-beta.32.3.
 
 ## Development server
@@ -27,17 +29,20 @@ Before running the tests make sure you are serving the app via `ng serve`.
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 ## Docker environment
-There is an issue with `ng cli` inside docker container. Symlinked node_modules folder is not working for
-this project (ng serve throws an error at the last step). To solve it we could use only shared `src` folder and symlink it
-to the unshared project folder (already inside docker image).
 
 ```
 docker-compose build & docker-compose up -d
 docker exec -it myaccount bash
 ln -s /srv/myaccount/src /srv/myaccount-server/
-cd /srv/myaccount-server
+cd /srv/myaccount
 git pull
 npm install
-ng serve --host 0.0.0.0
+ng serve --host 0.0.0.0 --port 9099
 ```
-
+Download environment variables shell script [config.sh](https://berlingskemedia.atlassian.net/wiki/download/attachments/129134687/config.sh?version=1&modificationDate=1491815428453&cacheVersion=1&api=v2)
+and run in inside docker container. Then run server
+```
+. config.ssh
+npm run dev
+```
+Test the app in browser http://localhost:9099
