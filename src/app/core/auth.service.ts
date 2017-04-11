@@ -1,46 +1,52 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
+import { AuthTicket } from '../../../d/auth';
 import { AccountInfo } from '../../../d/gigya/accounts/accounts';
+import { Response as GigyaResponse } from '../../../d/gigya/socialize/response';
 import { ApiService } from './api.service';
-import { AuthStore } from '../store/auth.store';
-import { UserService } from './user.service';
-
-export const JWT_STORAGE_NAME: string = 'auth_jwt';
+import { GigyaService } from './gigya.service';
+import { JwtService } from './jwt.service';
 
 @Injectable()
 export class AuthService {
-  private static get jwtFromStorage(): string {
-    return localStorage.getItem(JWT_STORAGE_NAME);
+  private _authTicket: BehaviorSubject<AuthTicket> = new BehaviorSubject<AuthTicket>(null);
+
+  constructor(private api: ApiService,
+              private jwtService: JwtService,
+              private gigyaService: GigyaService) {
   }
 
-  private static set jwtFromStorage(jwt: string) {
-    if (jwt) {
-      localStorage.setItem(JWT_STORAGE_NAME, jwt);
-    } else {
-      localStorage.removeItem(JWT_STORAGE_NAME);
-    }
+  get authTicket(): AuthTicket {
+    return this._authTicket.getValue();
   }
 
-  constructor(private authStore: AuthStore,
-              private api: ApiService,
-              private router: Router,
-              private userService: UserService) {
+  set authTicket(authTicket: AuthTicket) {
+    this._authTicket.next(authTicket);
   }
 
-  get jwt(): Promise<string> {
-    if (AuthService.jwtFromStorage) {
-      return Promise.resolve(AuthService.jwtFromStorage);
+  auth(): Promise<AuthTicket> {
+    if (this.authTicket) {
+      return Promise.resolve(this.authTicket);
     }
 
-    return this.userService.getUser()
+    if (this.jwtService.jwt) {
+      return Promise.resolve(this.jwtService.decode(this.jwtService.jwt));
+    }
+
+    return this.gigyaService.getUser()
       .then((accountInfo: AccountInfo) => {
-        if (UserService.isLoggedIn(accountInfo)) {
-          return this.getJwtFromServer(accountInfo)
+        if (GigyaService.isLoggedIn(accountInfo)) {
+          return this.api
+            .post('/user/ticket', {accountInfo})
+            .toPromise()
+            .then((response: Response) => response.text())
             .then((jwt: string) => {
-              AuthService.jwtFromStorage = jwt;
-              return jwt;
+              this.jwtService.jwt = jwt;
+              this.authTicket = this.jwtService.decode(jwt);
+
+              return this.authTicket;
             });
         }
 
@@ -49,18 +55,11 @@ export class AuthService {
   }
 
   logOut(): Promise<void> {
-    return this.userService.logOut()
-      .then(() => {
-        this.authStore.jwt = null;
-        AuthService.jwtFromStorage = null;
-        this.router.navigate(['/login']);
+    return this.gigyaService.logOut()
+      .then((response: GigyaResponse) => {
+        this.jwtService.jwt = null;
+        this.authTicket = null;
+        return response;
       });
-  }
-
-  private getJwtFromServer(accountInfo: AccountInfo): Promise<string> {
-    return this.api
-      .post('/user/ticket', {accountInfo})
-      .toPromise()
-      .then((response: Response) => response.text());
   }
 }

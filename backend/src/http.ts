@@ -2,7 +2,6 @@ import * as Hawk from 'hawk';
 import * as request from 'request';
 import { resolve } from 'url';
 import { IncomingMessage } from 'http';
-import { Headers } from 'request';
 
 import { BaseTicket } from '../../d/bpc';
 
@@ -35,7 +34,7 @@ export class Http {
 
   call(method: string, path: string, payload?: any, credentials?: BaseTicket): Promise<any> {
     const uri: string = resolve(this.apiUrl, path);
-    const headers: Headers = {
+    const headers: request.Headers = {
       ['Content-Type']: 'application/json'
     };
 

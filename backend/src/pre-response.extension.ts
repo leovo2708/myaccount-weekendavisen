@@ -1,6 +1,5 @@
 import { IReply, Request, Response } from 'hapi';
 import * as Boom from 'boom';
-import { BoomError } from 'boom';
 import { Headers } from 'request';
 
 function getHeaders(origin: string): Headers {
@@ -15,7 +14,7 @@ function getHeaders(origin: string): Headers {
 
 export function preResponseExtension(request: Request, reply: IReply): void {
   if (request.response.isBoom) {
-    const response: BoomError = <any>request.response;
+    const response: Boom.BoomError = <any>request.response;
 
     response.output.headers = Object.assign(getHeaders(request.headers.origin), response.output.headers);
 

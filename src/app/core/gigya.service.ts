@@ -8,7 +8,7 @@ import { Response as GigyaResponse } from '../../../d/gigya/socialize/response';
 declare const gigya: Gigya;
 
 @Injectable()
-export class UserService {
+export class GigyaService {
   static isLoggedIn(userInfo: AccountInfo): boolean {
     return userInfo.errorCode === 0;
   }

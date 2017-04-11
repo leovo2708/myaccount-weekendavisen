@@ -5,17 +5,17 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/toPromise';
 
 import { API_URL } from '../../config';
-import { AuthStore } from '../store/auth.store';
+import { JwtService } from './jwt.service';
 
 @Injectable()
 export class ApiService {
   constructor(private http: Http,
-              private authStore: AuthStore) {
+              private jwtService: JwtService) {
   }
 
   private getRequestParams(params: RequestOptionsArgs): RequestOptionsArgs {
     const headers: Headers = new Headers({
-      Authorization: this.authStore.jwt
+      Authorization: this.jwtService.jwt
     });
 
     return {

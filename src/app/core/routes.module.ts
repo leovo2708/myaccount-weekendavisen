@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { LoginComponent } from '../login/login.component';
 import { LoginGuard } from '../login/login.guard';
+import { LoginModule } from '../login/login.module';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import {
   OrderDetailsComponent
@@ -38,12 +39,10 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    LoginModule,
     RootModule,
     RouterModule.forRoot(routes),
     SharedModule
-  ],
-  declarations: [
-    LoginComponent
   ],
   providers: [
     LoginGuard

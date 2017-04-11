@@ -3,14 +3,12 @@ import { Http } from '../http';
 import { BaseTicket, Ticket } from '../../../d/bpc';
 
 export class BPC {
-  public static ticketCookieName: string = 'bpc_ticket';
-
   private static appTicket: BaseTicket;
   private static ticketTimeoutID: NodeJS.Timer;
   private static http: Http = new Http(process.env.POC_APPLICATION_SSO_URL);
 
   public static getRsvp(accountInfo: AccountInfo): Promise<string> {
-    return this.http.get('/rsvp', {
+    return BPC.http.get('/rsvp', {
       app: process.env.POC_APPLICATION_APP_ID,
       provider: 'gigya',
       UID: accountInfo.UID,
@@ -21,19 +19,11 @@ export class BPC {
   }
 
   static getUserTicket(rsvp: string): Promise<Ticket> {
-    return this.http.post('/ticket/user', {rsvp}, BPC.appTicket);
+    return BPC.http.post('/ticket/user', {rsvp}, BPC.appTicket);
   }
 
   public static me(bpcTicket: Ticket): Promise<any> {
-    return this.http.get('/me', null, bpcTicket);
-  }
-
-  public static refreshUserTicket(userTicket: Ticket): Promise<Ticket> {
-    return BPC.reissueTicket(userTicket);
-  }
-
-  private static reissueTicket(ticket: BaseTicket): Promise<Ticket> {
-    return this.http.post('/ticket/reissue', null, ticket);
+    return BPC.http.get('/me', null, bpcTicket);
   }
 
   public static saveAppTicket(): void {
@@ -43,13 +33,13 @@ export class BPC {
       algorithm: 'sha256'
     };
 
-    this.http.post('/ticket/app', null, appTicket)
+    BPC.http.post('/ticket/app', null, appTicket)
       .then((result: string) => JSON.parse(result))
       .then((result: Ticket) => {
         console.log('BPC app ticket fetched and saved');
 
         BPC.appTicket = result;
-        // BPC.scheduleAppTicketRefresh(result.exp);
+        BPC.scheduleAppTicketRefresh(result.exp);
       })
       .catch((err: Error) => {
         console.error(err);
@@ -62,16 +52,7 @@ export class BPC {
     }
 
     BPC.ticketTimeoutID = global.setTimeout(() => {
-      BPC.reissueTicket(BPC.appTicket)
-        .then((result: Ticket) => {
-          console.log('BPC app ticket refreshed - exp:', result.exp, result);
-
-          BPC.appTicket = result;
-          BPC.scheduleAppTicketRefresh(result.exp);
-        })
-        .catch((err: Error) => {
-          console.error(err);
-        });
+      BPC.saveAppTicket();
     }, expires - Date.now());
   }
 }

@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 
-import { RoutesModule } from './routes.module';
-import { StoreModule } from '../store/store.module';
-import { UserService } from './user.service';
 import { ApiService } from './api.service';
 import { AuthService } from './auth.service';
+import { GigyaService } from './gigya.service';
+import { JwtService } from './jwt.service';
+import { RoutesModule } from './routes.module';
 
 @NgModule({
   imports: [
-    RoutesModule,
-    StoreModule
+    RoutesModule
   ],
   exports: [
     RoutesModule
@@ -17,7 +16,8 @@ import { AuthService } from './auth.service';
   providers: [
     ApiService,
     AuthService,
-    UserService
+    GigyaService,
+    JwtService
   ]
 })
 export class CoreModule {
