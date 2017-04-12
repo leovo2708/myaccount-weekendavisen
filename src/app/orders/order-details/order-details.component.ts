@@ -1,7 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
 
 import { OrdersService } from '../orders.service';
 import { OrderFull } from '../../../../d/kundeunivers';
@@ -11,26 +10,21 @@ import { OrderFull } from '../../../../d/kundeunivers';
   templateUrl: './order-details.component.html',
   styleUrls: ['./order-details.component.scss']
 })
-export class OrderDetailsComponent implements OnInit, OnDestroy {
+export class OrderDetailsComponent implements OnInit {
   order: OrderFull;
-  sub: Subscription;
 
   constructor(private ordersService: OrdersService,
-              private route: ActivatedRoute) { }
-
-  ngOnInit(): void {
-    this.sub = this.route.params
-      .subscribe((params: string[]) => {
-        this.ordersService.getOrder(params['orderId'])
-          .toPromise()
-          .then((response: Response) => response.json())
-          .then((order: OrderFull) => {
-            this.order = order;
-          });
-      });
+              private route: ActivatedRoute) {
   }
 
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
+  ngOnInit(): void {
+    this.route.params.subscribe((params: string[]) => {
+      this.ordersService.getOrder(params['orderId'])
+        .toPromise()
+        .then((response: Response) => response.json())
+        .then((order: OrderFull) => {
+          this.order = order;
+        });
+    });
   }
 }
