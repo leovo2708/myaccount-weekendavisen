@@ -26,7 +26,7 @@ export class JWT {
     return sign(authTicket, process.env.JWT_SECRET);
   }
 
-  static geAuthTicket(jwt: string): AuthTicket {
+  static getAuthTicket(jwt: string): AuthTicket {
     return decode(jwt, process.env.JWT_SECRET);
   }
 }

@@ -59,7 +59,7 @@ export interface AccountInfo extends Response {
   signatureTimestamp?: string;
   created?: string;
   createdTimestamp?: number;
-  data?: {};
+  data?: any;
   emails?: Emails;
   identities?: Identity[];
   iRank?: number;

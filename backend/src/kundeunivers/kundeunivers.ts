@@ -3,6 +3,7 @@ import {
   OrderFull, OrdersResponse,
   UserProfile
 } from '../../../d/kundeunivers';
+import { Request } from 'hapi';
 
 export class Kundeunivers {
   private static http: Http = new Http(process.env.KU_APPLICATION_URL);

@@ -6,13 +6,17 @@ import {
   OrderFull, OrdersResponse,
   UserProfile
 } from '../../../d/kundeunivers';
+import { AuthTicket } from '../../../d/auth';
+import { JWT } from '../jwt';
 
 export function KundeuniversRoutes(server: Server, options: {}, next: Function): void {
   server.route({
     method: 'GET',
-    path: '/{userId}/orders',
+    path: '/orders',
     handler: (request: Request, reply: IReply): void => {
-      Kundeunivers.getUserOrders(request.params.userId)
+      const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
+
+      Kundeunivers.getUserOrders(authTicket.accountInfo.data.sso_uid)
         .then((orders: OrdersResponse) => reply(orders))
         .catch((err: Error) => reply(Boom.wrap(err)));
     }
@@ -20,9 +24,11 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
 
   server.route({
     method: 'GET',
-    path: '/{userId}/orders/{orderId}',
+    path: '/orders/{orderId}',
     handler: (request: Request, reply: IReply): void => {
-      Kundeunivers.getUserOrder(request.params.userId, request.params.orderId)
+      const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
+
+      Kundeunivers.getUserOrder(authTicket.accountInfo.data.sso_uid, request.params.orderId)
         .then((order: OrderFull) => reply(order))
         .catch((err: Error) => reply(Boom.wrap(err)));
     }
@@ -30,9 +36,11 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
 
   server.route({
     method: 'GET',
-    path: '/user/{userId}',
+    path: '/user',
     handler: (request: Request, reply: IReply): void => {
-      Kundeunivers.getUserProfile(request.params.userId)
+      const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
+
+      Kundeunivers.getUserProfile(authTicket.accountInfo.data.sso_uid)
         .then((user: UserProfile) => reply(user))
         .catch((err: Error) => reply(Boom.wrap(err)));
     }

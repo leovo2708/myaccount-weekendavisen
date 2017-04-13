@@ -10,10 +10,10 @@ export class OrdersService {
   }
 
   getOrders(): Observable<Response> {
-    return this.api.get('/kundeunivers/3043255/orders');
+    return this.api.get('/kundeunivers/orders');
   }
 
   getOrder(orderId: string): Observable<Response> {
-    return this.api.get(`/kundeunivers/3043255/orders/${orderId}`);
+    return this.api.get(`/kundeunivers/orders/${orderId}`);
   }
 }

@@ -29,7 +29,7 @@ export function UserRoutes(server: Server, options: {}, next: Function): void {
     method: 'GET',
     path: '/me',
     handler: (request: Request, reply: IReply): void => {
-      BPC.me(JWT.geAuthTicket(request.headers.authorization).bpcTicket)
+      BPC.me(JWT.getAuthTicket(request.headers.authorization).bpcTicket)
         .then((userInfo: any) => {
           reply(userInfo);
         })
