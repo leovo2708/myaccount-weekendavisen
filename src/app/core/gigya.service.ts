@@ -1,21 +1,16 @@
-import { Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 
-import { Gigya } from '../../../d/gigya/gigya';
 import { AccountInfo } from '../../../d/gigya/accounts/accounts';
+import { Gigya } from '../../../d/gigya/gigya';
 import { LoginEvent } from '../../../d/gigya/events/loginEvent';
-import { API_URL } from '../../config';
-import { RsvpPayload, UserTicket } from '../../../d/http/bpc';
+import { Response as GigyaResponse } from '../../../d/gigya/socialize/response';
 
 declare const gigya: Gigya;
 
 @Injectable()
-export class UserService {
+export class GigyaService {
   static isLoggedIn(userInfo: AccountInfo): boolean {
     return userInfo.errorCode === 0;
-  }
-
-  constructor(private http: Http) {
   }
 
   getUser(): Promise<AccountInfo> {
@@ -24,20 +19,6 @@ export class UserService {
         callback: (response: AccountInfo): void => fulfill(response)
       });
     });
-  }
-
-  getUserTicket(accountInfo: AccountInfo): Promise<UserTicket> {
-    const params: RsvpPayload = {
-      UID: accountInfo.UID,
-      UIDSignature: accountInfo.UIDSignature,
-      signatureTimestamp: accountInfo.signatureTimestamp,
-      email: accountInfo.profile && accountInfo.profile.email
-    };
-
-    return this.http
-      .get(`${API_URL}/ticket`, {params})
-      .toPromise()
-      .then((res: Response) => <UserTicket>res.json());
   }
 
   logIn(containerID?: string): Promise<LoginEvent> {
@@ -51,6 +32,20 @@ export class UserService {
       gigya.accounts.showScreenSet({
         screenSet: 'Default-RegistrationLogin',
         containerID
+      });
+    });
+  }
+
+  logOut(): Promise<any> {
+    return new Promise((fulfill: Function, reject: Function): void => {
+      gigya.accounts.logout({
+        callback: (response: GigyaResponse): void => {
+          if (response.errorCode) {
+            reject(response);
+          } else {
+            fulfill();
+          }
+        }
       });
     });
   }

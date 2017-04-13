@@ -1,32 +1,38 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import {
   CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot, Router
 } from '@angular/router';
 
-import { LoginStore } from '../store/login.store';
-import { UserStore } from '../store/user.store';
-import { UserTicket } from '../../../d/http/bpc';
+import { LoginService } from './login.service';
+import { AuthService } from '../core/auth.service';
+import { AuthTicket } from '../../../d/auth';
 
 @Injectable()
 export class LoginGuard implements CanActivate {
-  constructor(private loginStore: LoginStore,
+  constructor(private loginService: LoginService,
               private router: Router,
-              private userStore: UserStore) {
+              private authService: AuthService) {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-    return this.userStore.userTicket
-      .then((userTicket: UserTicket) => {
-        if (userTicket) {
-          return true;
-        }
-
-        this.loginStore.redirectionUrl = state.url;
-        this.router.navigate(['/login']);
-        return false;
-      });
+    return new Promise((fulfill: Function): void => {
+      if (this.authService.authTicket) {
+        fulfill(true);
+      } else {
+        // TODO: for now, this request always resolves but eventually it should
+        // also be sometimes rejected, in the case when the user is not logged in
+        this.authService.auth().then((authTicket: AuthTicket) => {
+          if (authTicket) {
+            fulfill(true);
+          } else {
+            this.loginService.redirectionUrl = state.url;
+            this.router.navigate(['/login']);
+            fulfill(false);
+          }
+        });
+      }
+    });
   }
 }

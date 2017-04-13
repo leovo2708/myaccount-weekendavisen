@@ -1,0 +1,10 @@
+<nav md-tab-nav-bar>
+  <a md-tab-link
+     *ngFor="let item of items"
+     [routerLink]="[item.url]"
+     routerLinkActive #rla="routerLinkActive"
+     [active]="rla.isActive">
+    <md-icon *ngIf="item.icon">{{item.icon}}</md-icon>
+    <span *ngIf="item.title">{{item.title}}</span>
+  </a>
+</nav>

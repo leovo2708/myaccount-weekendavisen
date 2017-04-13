@@ -1,24 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Response } from '@angular/http';
 
-import { API_URL } from '../../config';
+import { ApiService } from '../core/api.service';
 import { Observable } from 'rxjs/Observable';
-import { UserStore } from '../store/user.store';
 
 @Injectable()
 export class DashboardService {
 
   constructor(
-    private http: Http,
-    private userStore: UserStore) {
+    private api: ApiService) {
   }
 
   public getUserInfo(): Observable<any> {
-    return this.userStore
-      .getParamsWithUserTicket()
-      .flatMap((params: any) => {
-        return this.http.get(`${API_URL}/user/me`, {params});
-      })
+    return this.api.get('/user/me')
       .map((res: Response) => res.json());
   }
 }

@@ -59,7 +59,7 @@ export interface AccountInfo extends Response {
   signatureTimestamp?: string;
   created?: string;
   createdTimestamp?: number;
-  data?: {};
+  data?: any;
   emails?: Emails;
   identities?: Identity[];
   iRank?: number;
@@ -101,8 +101,16 @@ export interface EventHandlers {
   context?: {};
 }
 
+export interface LogoutParams {
+  callback?: (response: Response) => void;
+  cid?: string;
+  forceProvidersLogout?: boolean;
+  context?: {};
+}
+
 export interface Accounts {
   addEventHandlers(handlers: EventHandlers): void;
   getAccountInfo(params: GetAccountInfoParams): void;
   showScreenSet(params: ShowScreenSetParams): void;
+  logout(params: LogoutParams): void;
 }

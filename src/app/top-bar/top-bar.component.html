@@ -1,8 +1,8 @@
 <md-toolbar color="primary">
   <span class="title">My account</span>
   <button md-icon-button [mdMenuTriggerFor]="menu">
-    <img *ngIf="accountInfo.profile.thumbnailURL" class="avatar" [src]="accountInfo.profile.thumbnailURL">
-    <md-icon *ngIf="!accountInfo.profile.thumbnailURL">account_box</md-icon>
+    <img *ngIf="thumbnailURL" class="avatar" [src]="thumbnailURL">
+    <md-icon *ngIf="!thumbnailURL">account_box</md-icon>
   </button>
   <md-menu #menu="mdMenu">
     <button md-menu-item (click)="logOut()">

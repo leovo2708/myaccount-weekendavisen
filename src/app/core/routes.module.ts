@@ -2,16 +2,22 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from '../dashboard/dashboard.component';
-import { LoginGuard } from '../login/login.guard';
-import { UserService } from './user.service';
 import { LoginComponent } from '../login/login.component';
+import { LoginGuard } from '../login/login.guard';
+import { LoginModule } from '../login/login.module';
 import { NotFoundComponent } from '../not-found/not-found.component';
+import {
+  OrderDetailsComponent
+} from '../orders/order-details/order-details.component';
+import { OrdersComponent } from '../orders/orders.component';
 import { RootComponent } from '../root/root.component';
+import { SharedModule } from '../shared/shared.module';
+import { RootModule } from '../root/root.module';
 
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginComponent,
+    component: LoginComponent
   },
   {
     path: '',
@@ -19,6 +25,8 @@ const routes: Routes = [
     component: RootComponent,
     children: [
       {path: 'dashboard', component: DashboardComponent},
+      {path: 'orders', component: OrdersComponent},
+      {path: 'orders/:orderId', component: OrderDetailsComponent},
       {path: '404', component: NotFoundComponent},
       {path: '', pathMatch: 'full', redirectTo: 'dashboard'}
     ]
@@ -30,12 +38,15 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  imports: [
+    LoginModule,
+    RootModule,
+    RouterModule.forRoot(routes),
+    SharedModule
+  ],
   providers: [
-    LoginGuard,
-    UserService
+    LoginGuard
   ]
 })
-export class AppRoutesModule {
+export class RoutesModule {
 }
