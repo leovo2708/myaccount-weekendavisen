@@ -32,7 +32,8 @@ export class AuthService {
     }
 
     if (this.jwtService.jwt) {
-      return Promise.resolve(this.jwtService.decode(this.jwtService.jwt));
+      this.authTicket = this.jwtService.decode(this.jwtService.jwt);
+      return Promise.resolve(this.authTicket);
     }
 
     return this.gigyaService.getUser()
