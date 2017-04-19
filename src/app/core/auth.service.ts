@@ -19,7 +19,17 @@ export class AuthService {
   }
 
   get authTicket(): AuthTicket {
-    return this._authTicket.getValue();
+    const authTicket: AuthTicket = this._authTicket.getValue();
+
+    if (authTicket) {
+      if (authTicket.exp > Date.now()) {
+        return authTicket;
+      }
+
+      this.clearTickets();
+    }
+
+    return null;
   }
 
   set authTicket(authTicket: AuthTicket) {
@@ -58,9 +68,13 @@ export class AuthService {
   logOut(): Promise<void> {
     return this.gigyaService.logOut()
       .then((response: GigyaResponse) => {
-        this.jwtService.jwt = null;
-        this.authTicket = null;
+        this.clearTickets();
         return response;
       });
+  }
+
+  private clearTickets(): void {
+    this.jwtService.jwt = null;
+    this.authTicket = null;
   }
 }

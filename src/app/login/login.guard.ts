@@ -17,22 +17,14 @@ export class LoginGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-    return new Promise((fulfill: Function): void => {
-      if (this.authService.authTicket) {
-        fulfill(true);
-      } else {
-        // TODO: for now, this request always resolves but eventually it should
-        // also be sometimes rejected, in the case when the user is not logged in
-        this.authService.auth().then((authTicket: AuthTicket) => {
-          if (authTicket) {
-            fulfill(true);
-          } else {
-            this.loginService.redirectionUrl = state.url;
-            this.router.navigate(['/login']);
-            fulfill(false);
-          }
-        });
+    return this.authService.auth().then((authTicket: AuthTicket) => {
+      if (authTicket) {
+        return true;
       }
+
+      this.loginService.redirectionUrl = state.url;
+      this.router.navigate(['/login']);
+      return false;
     });
   }
 }
