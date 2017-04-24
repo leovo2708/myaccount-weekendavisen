@@ -4,5 +4,4 @@ e2e
 config.sh
 config.example.sh
 .editorconfig
-Dockerfile
 conf
