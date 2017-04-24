@@ -10,6 +10,7 @@ import {
   OrderDetailsComponent
 } from '../orders/order-details/order-details.component';
 import { OrdersComponent } from '../orders/orders.component';
+import { ChangePasswordComponent } from '../change-password/change-password.component';
 import { RootComponent } from '../root/root.component';
 import { SharedModule } from '../shared/shared.module';
 import { RootModule } from '../root/root.module';
@@ -27,6 +28,7 @@ const routes: Routes = [
       {path: 'dashboard', component: DashboardComponent},
       {path: 'orders', component: OrdersComponent},
       {path: 'orders/:orderId', component: OrderDetailsComponent},
+      {path: 'change-password', component: ChangePasswordComponent},
       {path: '404', component: NotFoundComponent},
       {path: '', pathMatch: 'full', redirectTo: 'dashboard'}
     ]
