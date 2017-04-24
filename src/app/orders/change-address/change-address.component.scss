@@ -1,0 +1,20 @@
+.input-small {
+  width: 70px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    margin: {
+      left: 5px;
+    }
+
+    &:first-child {
+      margin: {
+        left: 0;
+      }
+    }
+  }
+}

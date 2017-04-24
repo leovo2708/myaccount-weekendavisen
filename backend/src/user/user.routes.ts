@@ -1,9 +1,10 @@
 import { IReply, Request, Server } from '@types/hapi';
-import * as Boom from 'boom';
 
 import { BPC } from './bpc';
 import { Ticket } from '../../../d/bpc';
 import { JWT } from '../jwt';
+import { Result, RichResult } from '../../../d/http';
+import { HttpHelper } from '../utils/http.helper';
 
 export function UserRoutes(server: Server, options: {}, next: Function): void {
   server.route({
@@ -14,14 +15,12 @@ export function UserRoutes(server: Server, options: {}, next: Function): void {
     },
     handler: (request: Request, reply: IReply): void => {
       BPC.getRsvp(request.payload.accountInfo)
-        .then((rsvp: string) => BPC.getUserTicket(rsvp))
-        .then((bpcTicket: Ticket) => JWT.generateToken(request.payload.accountInfo, bpcTicket))
+        .then((result: RichResult<string>) => BPC.getUserTicket(result.body))
+        .then((result: RichResult<Ticket>) => JWT.generateToken(request.payload.accountInfo, result.body))
         .then((jwt: string) => {
           reply(jwt);
         })
-        .catch((err: Error) => {
-          reply(Boom.wrap(err));
-        });
+        .catch((result: Result) => reply(HttpHelper.wrapError(result)));
     }
   });
 
@@ -30,12 +29,10 @@ export function UserRoutes(server: Server, options: {}, next: Function): void {
     path: '/me',
     handler: (request: Request, reply: IReply): void => {
       BPC.me(JWT.getAuthTicket(request.headers.authorization).bpcTicket)
-        .then((userInfo: any) => {
-          reply(userInfo);
+        .then((result: Result) => {
+          reply(result.body);
         })
-        .catch((err: Error) => {
-          reply(Boom.wrap(err));
-        });
+        .catch((result: Result) => reply(HttpHelper.wrapError(result)));
     }
   });
 

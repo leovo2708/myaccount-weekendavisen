@@ -60,3 +60,13 @@ export interface UserProfile {
   phone: string;
   orders: Order[];
 }
+
+export interface ResponseStatus {
+  status: string;
+}
+
+export interface UserDataRequest {
+  order_id: string;
+  sso_name: string;
+  userdata: any;
+}

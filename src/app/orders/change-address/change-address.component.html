@@ -1,0 +1,66 @@
+<h1 md-dialog-title>Change address</h1>
+<md-dialog-content>
+  <form #addressForm="ngForm">
+    <div class="input-group">
+      <md-input-container>
+        <input name="firstName" mdInput placeholder="First Name"
+               [(ngModel)]="formModel.firstname">
+      </md-input-container>
+      <md-input-container>
+        <input name="lastName" mdInput placeholder="Last Name" required
+               [(ngModel)]="formModel.lastname">
+      </md-input-container>
+    </div>
+    <div class="input-group">
+      <md-input-container>
+        <input name="zipCode" mdInput placeholder="Zip Code" class="input-small"
+               required [(ngModel)]="formModel.zipcode">
+      </md-input-container>
+      <md-input-container>
+        <input name="city" mdInput placeholder="City" required
+               [(ngModel)]="formModel.city">
+      </md-input-container>
+    </div>
+    <div class="input-group">
+      <md-input-container>
+        <input name="street" mdInput placeholder="Street" required
+               [(ngModel)]="formModel.street">
+      </md-input-container>
+      <md-input-container>
+        <input name="number" mdInput placeholder="Number" class="input-small"
+               required [(ngModel)]="formModel.number">
+      </md-input-container>
+      <md-input-container>
+        <input name="letter" mdInput placeholder="Letter" class="input-small"
+               [(ngModel)]="formModel.letter">
+      </md-input-container>
+      <md-input-container>
+        <input name="floor" mdInput placeholder="Floor" class="input-small"
+               [(ngModel)]="formModel.floor">
+      </md-input-container>
+      <md-input-container>
+        <input name="side" mdInput placeholder="Side" class="input-small"
+               [(ngModel)]="formModel.side">
+      </md-input-container>
+    </div>
+    <div class="input-group">
+      <md-input-container>
+        <input name="phone" mdInput placeholder="Phone" required
+               [(ngModel)]="formModel.phone">
+      </md-input-container>
+    </div>
+    <div class="input-group">
+      <md-input-container>
+        <input name="co" mdInput placeholder="CO" [(ngModel)]="formModel.co">
+      </md-input-container>
+    </div>
+    <md-input-container>
+      <textarea name="message" mdInput placeholder="Message" required
+                [(ngModel)]="formModel.message"></textarea>
+    </md-input-container>
+  </form>
+</md-dialog-content>
+<md-dialog-actions class="actions">
+  <button md-raised-button (click)="cancel()">Cancel</button>
+  <button md-raised-button color="primary" (click)="save(addressForm.form)">Send request</button>
+</md-dialog-actions>

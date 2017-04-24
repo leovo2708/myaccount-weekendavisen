@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Rx';
 
 import 'rxjs/add/operator/toPromise';
 
-import { API_URL } from '../../config';
+import { environment } from '../../environments/environment';
 import { JwtService } from './jwt.service';
 
 @Injectable()
@@ -26,7 +26,7 @@ export class ApiService {
   }
 
   private getUrl(url: string): string {
-    return `${API_URL}${url}`;
+    return `${environment.apiUrl}${url}`;
   }
 
   get(url: string, params?: RequestOptionsArgs): Observable<Response> {

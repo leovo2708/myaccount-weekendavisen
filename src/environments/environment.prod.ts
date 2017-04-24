@@ -1,5 +1,6 @@
-import IEnvironment from './ienvironment';
+import IEnvironment from './environment.interface';
 
 export const environment: IEnvironment = {
-  production: true
+  production: true,
+  apiUrl: 'http://localhost:8000'
 };

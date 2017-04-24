@@ -3,13 +3,16 @@ import * as request from 'request';
 import { resolve } from 'url';
 import { IncomingMessage } from 'http';
 
-import { BaseTicket } from '../../d/bpc';
+import { BaseTicket } from '../../../d/bpc';
+import { Result, RichResult } from '../../../d/http';
 
 export class Http {
   apiUrl: string;
+  logCalls: boolean;
 
-  constructor(apiUrl: string) {
+  constructor(apiUrl: string, logCalls: boolean = false) {
     this.apiUrl = apiUrl;
+    this.logCalls = logCalls;
   }
 
   get(path: string, params?: any, credentials?: BaseTicket): Promise<any> {
@@ -45,7 +48,8 @@ export class Http {
       }).field;
     }
 
-    return new Promise((fulfill: Function, reject: Function): void => {
+    return new Promise((fulfill: (response: RichResult<any>) => void,
+                        reject: (response: Result) => void): void => {
       request({
         [method === 'GET' ? 'qs' : 'json']: payload,
         method,
@@ -53,9 +57,17 @@ export class Http {
         headers
       }, (error: Error, response: IncomingMessage, body: any): void => {
         if (error) {
-          reject(error);
+          reject({error});
         } else {
-          fulfill(body);
+          if (this.logCalls) {
+            console.log(new Date(), method, response.statusCode, response.statusMessage, uri);
+          }
+
+          if (response && response.statusCode > 399) {
+            reject({response, body});
+          } else {
+            fulfill({response, body});
+          }
         }
       });
     });
