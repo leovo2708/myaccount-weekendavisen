@@ -1,13 +1,14 @@
 import { AccountInfo } from '../../../d/gigya/accounts/accounts';
-import { Http } from '../http';
+import { Http } from '../utils/http';
 import { BaseTicket, Ticket } from '../../../d/bpc';
+import { RichResult } from '../../../d/http';
 
 export class BPC {
   private static appTicket: BaseTicket;
   private static ticketTimeoutID: NodeJS.Timer;
   private static http: Http = new Http(process.env.POC_APPLICATION_SSO_URL);
 
-  public static getRsvp(accountInfo: AccountInfo): Promise<string> {
+  public static getRsvp(accountInfo: AccountInfo): Promise<RichResult<string>> {
     return BPC.http.get('/rsvp', {
       app: process.env.POC_APPLICATION_APP_ID,
       provider: 'gigya',
@@ -18,11 +19,11 @@ export class BPC {
     });
   }
 
-  static getUserTicket(rsvp: string): Promise<Ticket> {
+  static getUserTicket(rsvp: string): Promise<RichResult<Ticket>> {
     return BPC.http.post('/ticket/user', {rsvp}, BPC.appTicket);
   }
 
-  public static me(bpcTicket: Ticket): Promise<any> {
+  public static me(bpcTicket: Ticket): Promise<RichResult<any>> {
     return BPC.http.get('/me', null, bpcTicket);
   }
 
@@ -34,7 +35,7 @@ export class BPC {
     };
 
     BPC.http.post('/ticket/app', null, appTicket)
-      .then((result: string) => JSON.parse(result))
+      .then((response: RichResult<string>) => JSON.parse(response.body))
       .then((result: Ticket) => {
         console.log('BPC app ticket fetched and saved');
 

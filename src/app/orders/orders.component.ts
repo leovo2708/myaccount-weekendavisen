@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
+import { MdDialog } from '@angular/material';
 
 import { Order, OrdersResponse } from '../../../d/kundeunivers';
 import { OrdersService } from './orders.service';
+import { ChangeAddressComponent } from './change-address/change-address.component';
 
 @Component({
   selector: 'app-orders',
@@ -12,7 +14,8 @@ import { OrdersService } from './orders.service';
 export class OrdersComponent implements OnInit {
   orders: Order[];
 
-  constructor(private ordersService: OrdersService) {
+  constructor(private mdDialog: MdDialog,
+              private ordersService: OrdersService) {
   }
 
   ngOnInit(): void {
@@ -24,4 +27,14 @@ export class OrdersComponent implements OnInit {
       });
   }
 
+  changeAddress(orderId: string): void {
+    this.mdDialog
+      .open(ChangeAddressComponent, {
+        data: {orderId}
+      })
+      .afterClosed()
+      .subscribe((result: any) => {
+        console.log('closed!', result);
+      });
+  }
 }

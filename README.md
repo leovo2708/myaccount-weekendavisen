@@ -42,7 +42,7 @@ ng serve --host 0.0.0.0 --port 9099
 Download environment variables shell script [config.sh](https://berlingskemedia.atlassian.net/wiki/download/attachments/129134687/config.sh?version=1&modificationDate=1491815428453&cacheVersion=1&api=v2)
 and run in inside docker container. Then run server
 ```
-. config.ssh
+. config.sh
 npm run dev
 ```
 Test the app in browser http://localhost:9099

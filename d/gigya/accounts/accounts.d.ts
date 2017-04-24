@@ -53,13 +53,17 @@ export interface LoginID {
   unverifiedEmails: string[];
 }
 
+export interface CustomData {
+  sso_uid: string;
+}
+
 export interface AccountInfo extends Response {
   UID?: string;
   UIDSignature?: string;
   signatureTimestamp?: string;
   created?: string;
   createdTimestamp?: number;
-  data?: any;
+  data?: CustomData;
   emails?: Emails;
   identities?: Identity[];
   iRank?: number;

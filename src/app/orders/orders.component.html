@@ -3,7 +3,7 @@
 <div *ngIf="orders && !orders.length">
   You don't have any orders.
 </div>
-<div *ngIf="orders && orders.length">
+<div *ngIf="orders && orders.length" class="orders-list">
   <md-card *ngFor="let order of orders" class="order-card">
     <md-card-header>
       <md-card-title>{{order.product_family}}</md-card-title>
@@ -14,7 +14,11 @@
       <div class="address">{{order.delivery_address}}</div>
     </md-card-content>
     <md-card-actions class="actions">
-      <button md-raised-button [routerLink]="['/orders', order.sap_order_id]">MORE...</button>
+      <button md-raised-button [mdMenuTriggerFor]="menu">MORE...</button>
+      <md-menu #menu="mdMenu">
+        <button md-menu-item [routerLink]="['/orders', order.sap_order_id]">Details</button>
+        <button md-menu-item (click)="changeAddress(order.sap_order_id)">Change address</button>
+      </md-menu>
     </md-card-actions>
   </md-card>
 </div>
