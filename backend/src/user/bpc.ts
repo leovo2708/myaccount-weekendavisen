@@ -36,6 +36,12 @@ export class BPC {
     BPC.http.post('/ticket/app', null, appTicket)
       .then((result: string) => JSON.parse(result))
       .then((result: Ticket) => {
+
+        if (result.error){
+          console.error(result)
+          return;
+        }
+
         console.log('BPC app ticket fetched and saved');
 
         BPC.appTicket = result;

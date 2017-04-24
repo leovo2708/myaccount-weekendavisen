@@ -11,4 +11,7 @@ export interface Ticket extends BaseTicket {
   grant: string;
   scope: string[];
   user: string;
+  statusCode: number;
+  error: string;
+  message: string;
 }
