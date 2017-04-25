@@ -24,7 +24,7 @@ RUN npm run server:compile
 RUN npm run client:build
 
 # Exposing our endpoint to Docker.
-EXPOSE 4200 8084 9099
+EXPOSE 4200 8000 8084 9099
 
 # When starting a container with our image, this command will be run.
 CMD ["npm", "start"]
