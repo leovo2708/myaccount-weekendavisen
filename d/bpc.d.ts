@@ -5,6 +5,11 @@ export interface BaseTicket {
   key: string;
 }
 
+export interface NewPassword {
+  email: string;
+  newPassword: string;
+}
+
 export interface Ticket extends BaseTicket {
   exp: number;
   ext: any;

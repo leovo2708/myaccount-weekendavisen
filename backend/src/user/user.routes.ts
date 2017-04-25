@@ -36,5 +36,17 @@ export function UserRoutes(server: Server, options: {}, next: Function): void {
     }
   });
 
+  server.route({
+    method: 'POST',
+    path: '/change-password',
+    handler: (request: Request, reply: IReply): void => {
+      BPC.changePassword(JWT.getAuthTicket(request.headers.authorization).bpcTicket, request.payload)
+        .then((result: Result) => {
+          reply(result.body);
+        })
+        .catch((result: Result) => reply(HttpHelper.wrapError(result)));
+    }
+  });
+
   next();
 }

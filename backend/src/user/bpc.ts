@@ -1,6 +1,6 @@
 import { AccountInfo } from '../../../d/gigya/accounts/accounts';
 import { Http } from '../utils/http';
-import { BaseTicket, Ticket } from '../../../d/bpc';
+import { BaseTicket, Ticket, NewPassword } from '../../../d/bpc';
 import { RichResult } from '../../../d/http';
 
 export class BPC {
@@ -25,6 +25,11 @@ export class BPC {
 
   public static me(bpcTicket: Ticket): Promise<RichResult<any>> {
     return BPC.http.get('/me', null, bpcTicket);
+  }
+
+  public static changePassword(bpcTicket: Ticket, payload: NewPassword): Promise<RichResult<any>> {
+    console.log(payload);
+    return BPC.http.post('/resetpassword', payload, bpcTicket);
   }
 
   public static saveAppTicket(): void {
