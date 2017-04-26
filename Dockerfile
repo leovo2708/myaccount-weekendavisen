@@ -11,20 +11,20 @@ RUN wget -O - https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64
     | tar xzf - --strip-components=1 --exclude="README.md" --exclude="LICENSE" \
     --exclude="ChangeLog" -C "/usr/local"
 
-WORKDIR /myaccount-weekendavisen
+WORKDIR /myaccount-weekendavisens
 
 COPY . /myaccount-weekendavisen/
 
-RUN npm install -g typescript
-RUN npm install -g @angular/cli
+# RUN npm install -g typescript
+# RUN npm install -g @angular/cli
 RUN npm install -g http-server
-RUN npm install -g node-gyp@3.6.0
-RUN npm install --production
-RUN npm run server:compile
-RUN npm run client:build
+# RUN npm install -g node-gyp@3.6.0
+# RUN npm install --production
+# RUN npm run server:compile
+# RUN npm run client:build
 
 # Exposing our endpoint to Docker.
-EXPOSE 4200 8000 8084 9099
+EXPOSE 4200 8000
 
 # When starting a container with our image, this command will be run.
 CMD ["npm", "start"]
