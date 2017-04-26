@@ -11,7 +11,7 @@ RUN wget -O - https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64
     | tar xzf - --strip-components=1 --exclude="README.md" --exclude="LICENSE" \
     --exclude="ChangeLog" -C "/usr/local"
 
-WORKDIR /myaccount-weekendavisens
+WORKDIR /myaccount-weekendavisen
 
 COPY . /myaccount-weekendavisen/
 
