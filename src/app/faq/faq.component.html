@@ -1,0 +1,17 @@
+<h1>{{title}}</h1>
+<div *ngIf="!loaded">
+  Loading...
+</div>
+<div *ngIf="faq && !faq.length && loaded">
+  You don't have any orders.
+</div>
+<div *ngIf="faq && faq.length">
+  <md-card *ngFor="let question of faq; let i = index" class="faq-card">
+    <md-card-title (click)="switchAnswerVisibility(i)">
+      <span class="md-headline">{{question.title}}</span>
+    </md-card-title>
+    <md-card-content *ngIf="isAnswerVisible(i)">
+      <p [innerHTML]="question.body.und[0].safe_value | sanitizeHtml"></p>
+    </md-card-content>
+  </md-card>
+</div>

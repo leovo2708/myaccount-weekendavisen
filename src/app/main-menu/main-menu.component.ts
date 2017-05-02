@@ -16,7 +16,8 @@ export class MainMenuComponent implements OnInit {
   ngOnInit(): void {
     this.items = [
       {url: '/dashboard', icon: 'home'},
-      {url: '/orders', title: 'Orders'}
+      {url: '/orders', title: 'Orders'},
+      {url: '/faq', title: 'FAQ'}
     ];
   }
 }

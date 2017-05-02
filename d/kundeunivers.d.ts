@@ -34,6 +34,11 @@ export interface Delivery {
   address: string;
 }
 
+// TODO: Update type after KU API would be updated
+export interface FAQ {
+  [key: string]: any;
+}
+
 export interface OrderFull extends Order {
   conditions_url: string;
   product_family_extended: string;

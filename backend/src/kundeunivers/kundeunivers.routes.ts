@@ -2,7 +2,7 @@ import { IReply, Request, Server } from 'hapi';
 
 import { Kundeunivers } from './kundeunivers';
 import {
-  OrderFull, OrdersResponse, UserProfile
+  OrderFull, OrdersResponse, UserProfile, FAQ
 } from '../../../d/kundeunivers';
 import { AuthTicket } from '../../../d/auth';
 import { JWT } from '../jwt';
@@ -54,6 +54,16 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
 
       Kundeunivers.getUserProfile(authTicket.accountInfo.data.sso_uid)
         .then((result: RichResult<UserProfile>) => reply(result.body))
+        .catch((result: Result) => reply(HttpHelper.wrapError(result)));
+    }
+  });
+
+  server.route({
+    method: 'GET',
+    path: '/faq/{termId}',
+    handler: (request: Request, reply: IReply): void => {
+      Kundeunivers.getFAQ(request.params.termId)
+        .then((result: RichResult<FAQ>) => reply(result.body))
         .catch((result: Result) => reply(HttpHelper.wrapError(result)));
     }
   });

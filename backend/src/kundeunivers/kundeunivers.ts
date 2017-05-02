@@ -1,6 +1,6 @@
 import { Http } from '../utils/http';
 import {
-  OrderFull, OrdersResponse, ResponseStatus, UserDataRequest, UserProfile
+  OrderFull, OrdersResponse, ResponseStatus, UserDataRequest, UserProfile, FAQ
 } from '../../../d/kundeunivers';
 import { RichResult } from '../../../d/http';
 
@@ -27,5 +27,9 @@ export class Kundeunivers {
 
   public static getUserProfile(userId: string): Promise<RichResult<UserProfile>> {
     return this.http.get(`/my/account/sso-${userId}.json`);
+  }
+
+  public static getFAQ(termId: string): Promise<RichResult<FAQ>> {
+    return this.http.get(`/my/faq/${termId}.json`);
   }
 }

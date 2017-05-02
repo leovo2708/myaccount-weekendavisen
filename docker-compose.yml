@@ -16,4 +16,7 @@ services:
       - "8084-8086:8084-8086"
     volumes:
       - ./src:/srv/myaccount/src
+      - ./backend:/srv/myaccount/backend
+      - ./d:/srv/myaccount/d
+      - ./e2e:/srv/myaccount/e2e
     tty: true
