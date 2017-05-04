@@ -1,3 +1,5 @@
+@import '../colors';
+
 body {
   margin: 0;
 
@@ -8,4 +10,23 @@ body {
 
 a {
   color: #132277;
+}
+
+.weekendavisen {
+  .mat-toolbar.mat-primary {
+    background: #fff;
+    border-bottom: solid 10px $weekendavisen-color;
+  }
+
+  .logo {
+    background: url("/assets/weekendavisen_logo.png") center left no-repeat;
+    background-size: contain;
+    display: flex;
+    width: 450px;
+    height: 46px;
+  }
+
+  .mat-toolbar .title {
+    color: $weekendavisen-color;
+  }
 }

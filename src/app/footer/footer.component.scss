@@ -1,0 +1,68 @@
+@import '../../colors';
+
+footer {
+  padding: 20px ;
+  margin-top: 20px;
+}
+
+.border {
+  border-top: 1px solid #f2f2f2;
+}
+
+.columns-wrapper {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  .columns-wrapper {
+    display: block;
+  }
+}
+
+.info-box {
+  padding: 10px 0;
+
+  .column {
+    display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+.column {
+  flex-grow: 1;
+  padding-bottom: 10px;
+}
+
+.column a {
+  display: block;
+}
+
+h4 {
+  margin: 0 0 10px 0;
+}
+
+a {
+  color: $weekendavisen-color;
+  text-decoration: none;
+  margin: 0 0 5px 0;
+}
+
+a:hover {
+  color: $weekendavisen-hover;
+}
+
+.cookie-note {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  background: #fff;
+}
+
+.button-ok {
+  margin: 0 10px;
+  cursor: pointer;
+}
