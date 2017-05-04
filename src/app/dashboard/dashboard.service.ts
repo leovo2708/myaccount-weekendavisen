@@ -7,12 +7,10 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class DashboardService {
 
-  constructor(
-    private api: ApiService) {
+  constructor(private api: ApiService) {
   }
 
   public getUserInfo(): Observable<any> {
-    return this.api.get('/user/me')
-      .map((res: Response) => res.json());
+    return this.api.get('/user/me');
   }
 }

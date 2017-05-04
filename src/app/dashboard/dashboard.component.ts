@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
+import { MessageService } from '../message/message.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +17,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.dashboardService
       .getUserInfo()
-      .subscribe((userInfo: any) => {
+      .toPromise()
+      .then((res: Response) => res.json())
+      .then((userInfo: any) => {
         this.userData = userInfo;
       });
   }
