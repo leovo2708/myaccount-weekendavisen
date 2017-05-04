@@ -1,24 +1,40 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
 
 import { ApiService } from '../core/api.service';
 import { ChangeAddressModel } from './change-address/change-address.model';
+import { OrderFull, OrdersResponse } from '../../../d/kundeunivers';
+import { LoadingService } from '../loading/loading.service';
 
 @Injectable()
 export class OrdersService {
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService,
+              private loadingService: LoadingService) {
   }
 
-  changeAddress(ordersId: string, payload: ChangeAddressModel): Observable<Response> {
-    return this.api.put(`/kundeunivers/orders/${ordersId}/address`, payload);
+  changeAddress(ordersId: string, payload: ChangeAddressModel): Promise<Response> {
+    this.loadingService.show();
+
+    return this.api.put(`/kundeunivers/orders/${ordersId}/address`, payload)
+      .finally(() => this.loadingService.hide())
+      .toPromise();
   }
 
-  getOrders(): Observable<Response> {
-    return this.api.get('/kundeunivers/orders');
+  getOrders(): Promise<OrdersResponse> {
+    this.loadingService.show();
+
+    return this.api.get('/kundeunivers/orders')
+      .finally(() => this.loadingService.hide())
+      .toPromise()
+      .then((response: Response) => response.json());
   }
 
-  getOrder(orderId: string): Observable<Response> {
-    return this.api.get(`/kundeunivers/orders/${orderId}`);
+  getOrder(orderId: string): Promise<OrderFull> {
+    this.loadingService.show();
+
+    return this.api.get(`/kundeunivers/orders/${orderId}`)
+      .finally(() => this.loadingService.hide())
+      .toPromise()
+      .then((response: Response) => response.json());
   }
 }

@@ -20,8 +20,6 @@ export class OrderDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: string[]) => {
       this.ordersService.getOrder(params['orderId'])
-        .toPromise()
-        .then((response: Response) => response.json())
         .then((order: OrderFull) => {
           this.order = order;
         });
