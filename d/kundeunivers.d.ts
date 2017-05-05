@@ -75,3 +75,8 @@ export interface UserDataRequest {
   sso_name: string;
   userdata: any;
 }
+
+export interface EPaper {
+  url: string;
+  status: string;
+}

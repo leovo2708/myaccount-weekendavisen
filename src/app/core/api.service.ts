@@ -13,7 +13,7 @@ export class ApiService {
               private jwtService: JwtService) {
   }
 
-  private getRequestParams(params: RequestOptionsArgs): RequestOptionsArgs {
+  private getRequestParams(params?: RequestOptionsArgs): RequestOptionsArgs {
     const headers: Headers = new Headers({
       Authorization: this.jwtService.jwt
     });

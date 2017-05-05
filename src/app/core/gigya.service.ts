@@ -37,13 +37,13 @@ export class GigyaService {
   }
 
   logOut(): Promise<any> {
-    return new Promise((fulfill: Function, reject: Function): void => {
+    return new Promise((fulfill: (response: GigyaResponse) => void, reject: Function): void => {
       gigya.accounts.logout({
         callback: (response: GigyaResponse): void => {
           if (response.errorCode) {
             reject(response);
           } else {
-            fulfill();
+            fulfill(response);
           }
         }
       });

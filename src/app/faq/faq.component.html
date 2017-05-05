@@ -1,8 +1,5 @@
-<h1>{{title}}</h1>
-<div *ngIf="!loaded">
-  Loading...
-</div>
-<div *ngIf="faq && !faq.length && loaded">
+<h1>FAQ</h1>
+<div *ngIf="faq && !faq.length">
   You don't have any orders.
 </div>
 <div *ngIf="faq && faq.length">

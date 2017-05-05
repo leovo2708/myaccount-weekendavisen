@@ -1,0 +1,12 @@
+.wrapper {
+  overflow: hidden;
+}
+
+.bar {
+  transform: translateY(-5px);
+  transition: transform 100ms ease-out;
+
+  &.active {
+    transform: translateY(0);
+  }
+}

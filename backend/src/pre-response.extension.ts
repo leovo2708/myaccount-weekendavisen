@@ -35,11 +35,6 @@ export function preResponseExtension(request: Request, reply: IReply): void {
     const response: Response = request.response;
 
     response.headers = Object.assign(getHeaders(request.headers.origin), response.headers);
-
-    if (response.statusCode && response.statusCode > 399) {
-      reply(Boom.create(response.statusCode, response.toString()));
-    } else {
-      reply.continue();
-    }
+    reply.continue();
   }
 }

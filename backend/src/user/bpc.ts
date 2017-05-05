@@ -37,9 +37,8 @@ export class BPC {
     BPC.http.post('/ticket/app', null, appTicket)
       .then((response: RichResult<string>) => JSON.parse(response.body))
       .then((result: Ticket) => {
-
-        if (result.error){
-          console.error(result)
+        if (result.error) {
+          console.error(result);
           return;
         }
 

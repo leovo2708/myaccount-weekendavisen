@@ -1,0 +1,8 @@
+<div class="container" (mouseover)="stopTimeout()" (mouseout)="resumeTimeout()">
+  <div class="message-container" *ngFor="let message of messages" [@flyInOut]="'in'">
+    <md-card class="message" [ngClass]="message.color">
+      {{message.text}}
+      <md-icon class="close" (click)="closeMessage(message)">clear</md-icon>
+    </md-card>
+  </div>
+</div>

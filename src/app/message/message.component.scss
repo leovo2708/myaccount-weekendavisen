@@ -1,0 +1,67 @@
+.container {
+  position: absolute;
+  top: 20px;
+  right: 70px;
+}
+
+.message-container {
+  position: absolute;
+  right: 0;
+  z-index: 1;
+
+  min-width: 180px;
+
+  transform: translateY(-20px);
+  opacity: 0;
+
+  &:nth-child(1) {
+    z-index: 3;
+
+    .message {
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  &:nth-child(2) {
+    z-index: 2;
+
+    .message {
+      transform: translateY(10px) scale(0.97);
+    }
+  }
+
+  .message {
+    transition: transform 200ms ease-in;
+    transform: translateY(18px) scale(0.95);
+  }
+
+  &:nth-child(4) {
+    z-index: 0;
+
+    .message {
+      transform: translateY(24px) scale(0.94);
+    }
+  }
+}
+
+.message {
+  &.warn {
+    background: #F44336;
+    color: #fff;
+  }
+
+  &.success {
+    background: #70ce55;
+    color: #fff;
+  }
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 3px;
+
+  font-size: 1em;
+
+  cursor: pointer;
+}
