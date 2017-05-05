@@ -1,0 +1,46 @@
+$main-color: #00adef;
+$secondary-color: #006394;
+$utility-color: #9e9e9e;
+
+body {
+  font-family: georgia, arial, verdana, sans-serif;
+}
+
+.mat-toolbar.mat-primary {
+  background: #fff;
+  border-bottom: solid 10px $main-color;
+}
+
+.logo {
+  background: url("/assets/weekendavisen_logo.png") center left no-repeat;
+  background-size: contain;
+  display: flex;
+  width: 450px;
+  height: 46px;
+}
+
+.mat-toolbar .title {
+  color: $main-color;
+}
+
+footer {
+  color: $utility-color;
+
+  h4 {
+    a {
+      color: $main-color;
+    }
+  }
+
+  a {
+    color: $utility-color;
+  }
+
+  a:hover {
+    color: $secondary-color;
+  }
+}
+
+.mat-ink-bar {
+  background-color: $main-color;
+}

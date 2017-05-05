@@ -1,5 +1,3 @@
-@import '../../colors';
-
 footer {
   padding: 20px ;
   margin-top: 20px;
@@ -43,16 +41,6 @@ h4 {
   margin: 0 0 10px 0;
 }
 
-a {
-  color: $weekendavisen-color;
-  text-decoration: none;
-  margin: 0 0 5px 0;
-}
-
-a:hover {
-  color: $weekendavisen-hover;
-}
-
 .cookie-note {
   position: fixed;
   bottom: 0;
@@ -65,4 +53,18 @@ a:hover {
 .button-ok {
   margin: 0 10px;
   cursor: pointer;
+}
+
+footer {
+  font-family: arial, verdana;
+  font-size: 12px;
+
+  h4 {
+    font-size: 14px;
+  }
+
+  a {
+    text-decoration: none;
+    margin: 0 0 5px 0;
+  }
 }
