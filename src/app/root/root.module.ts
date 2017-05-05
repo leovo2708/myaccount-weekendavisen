@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { NotFoundModule } from '../not-found/not-found.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { TopBarModule } from '../top-bar/top-bar.module';
+import { FooterModule } from '../footer/footer.module';
 import { LoadingModule } from '../loading/loading.module';
 
 @NgModule({
@@ -19,7 +20,8 @@ import { LoadingModule } from '../loading/loading.module';
     OrdersModule,
     FaqModule,
     SharedModule,
-    TopBarModule
+    TopBarModule,
+    FooterModule
   ],
   declarations: [
     RootComponent
