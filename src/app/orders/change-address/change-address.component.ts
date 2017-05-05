@@ -30,7 +30,6 @@ export class ChangeAddressComponent implements OnInit {
     if (form.valid) {
       this.ordersService
         .changeAddress(this.data.orderId, this.formModel)
-        .toPromise()
         .then(() => {
           this.mdDialogRef.close();
         });

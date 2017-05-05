@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Response } from '@angular/http';
 import { MdDialog } from '@angular/material';
 
 import { Order, OrdersResponse } from '../../../d/kundeunivers';
@@ -20,8 +19,6 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit(): void {
     this.ordersService.getOrders()
-      .toPromise()
-      .then((response: Response) => response.json())
       .then((response: OrdersResponse) => {
         this.orders = response.orders;
       });

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Response } from '@angular/http';
 
 import { environment } from '../../environments/environment';
 import { FaqService } from './faq.service';
@@ -12,9 +11,7 @@ import { FAQ } from '../../../d/kundeunivers';
 })
 export class FaqComponent implements OnInit {
   showAnswer: Object = {};
-  loaded: boolean = false;
-  faq: Array<any> = [];
-  title: string = 'Mest stillede spørgsmål';
+  faq: FAQ[];
 
   constructor(
       private faqService: FaqService
@@ -30,11 +27,8 @@ export class FaqComponent implements OnInit {
 
   ngOnInit(): void {
     this.faqService.getFaq(environment.TID)
-      .toPromise()
-      .then((response: Response) => response.json())
       .then((response: FAQ) => {
         this.faq = response.result;
-        this.loaded = true;
       });
   }
 }

@@ -8,10 +8,12 @@ import { SharedModule } from '../shared/shared.module';
 import { NotFoundModule } from '../not-found/not-found.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { TopBarModule } from '../top-bar/top-bar.module';
+import { LoadingModule } from '../loading/loading.module';
 
 @NgModule({
   imports: [
     DashboardModule,
+    LoadingModule,
     MainMenuModule,
     NotFoundModule,
     OrdersModule,
