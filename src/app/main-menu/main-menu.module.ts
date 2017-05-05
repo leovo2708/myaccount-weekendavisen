@@ -3,6 +3,8 @@ import { MdIconModule, MdTabsModule } from '@angular/material';
 
 import { MainMenuComponent } from './main-menu.component';
 import { SharedModule } from '../shared/shared.module';
+import { MainMenuService } from './main-menu.service';
+import { LoadingEllipsisComponent } from '../loading-ellipsis/loading-ellipsis.component';
 
 @NgModule({
   imports: [
@@ -11,7 +13,11 @@ import { SharedModule } from '../shared/shared.module';
     SharedModule
   ],
   declarations: [
+    LoadingEllipsisComponent,
     MainMenuComponent
+  ],
+  providers: [
+    MainMenuService
   ],
   exports: [
     MainMenuComponent

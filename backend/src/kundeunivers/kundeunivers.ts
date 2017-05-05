@@ -1,6 +1,7 @@
 import { Http } from '../utils/http';
 import {
-  OrderFull, OrdersResponse, ResponseStatus, UserDataRequest, UserProfile, FAQ
+  OrderFull, OrdersResponse, ResponseStatus, UserDataRequest, UserProfile, FAQ,
+  EPaper
 } from '../../../d/kundeunivers';
 import { RichResult } from '../../../d/http';
 
@@ -15,6 +16,10 @@ export class Kundeunivers {
     };
 
     return this.http.post(`/my/account/sso-${userId}/change-address.json`, payload);
+  }
+
+  public static getEPaper(): Promise<RichResult<EPaper>> {
+    return this.http.get('/my/epaper/weekendavisen');
   }
 
   public static getUserOrders(userId: string): Promise<RichResult<OrdersResponse>> {

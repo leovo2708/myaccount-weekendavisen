@@ -1,4 +1,4 @@
-<nav md-tab-nav-bar>
+<nav md-tab-nav-bar class="menu">
   <a md-tab-link
      *ngFor="let item of items"
      [routerLink]="[item.url]"
@@ -7,4 +7,7 @@
     <md-icon *ngIf="item.icon">{{item.icon}}</md-icon>
     <span *ngIf="item.title">{{item.title}}</span>
   </a>
+  <app-loading-ellipsis md-tab-link *ngIf="ePaperLoading"></app-loading-ellipsis>
+  <a md-tab-link [href]="ePaperUrl" *ngIf="!ePaperLoading && ePaperUrl"
+     target="_blank">e-Paper</a>
 </nav>
