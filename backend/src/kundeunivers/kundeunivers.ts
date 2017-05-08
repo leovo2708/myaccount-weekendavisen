@@ -1,21 +1,15 @@
 import { Http } from '../utils/http';
-import {
-  OrderFull, OrdersResponse, ResponseStatus, UserDataRequest, UserProfile, FAQ,
-  EPaper
-} from '../../../d/kundeunivers';
 import { RichResult } from '../../../d/http';
+import { ChangeAddressModel } from '../../../d/kundeunivers.models';
+import {
+  OrderFull, OrdersResponse, ResponseStatus, UserProfile, FAQ, EPaper
+} from '../../../d/kundeunivers';
 
 export class Kundeunivers {
   private static http: Http = new Http(process.env.KU_APPLICATION_URL, true);
 
-  public static changeAddress(userId: string, orderId: string, data: any): Promise<RichResult<ResponseStatus>> {
-    const payload: UserDataRequest = {
-      order_id: orderId,
-      sso_name: userId,
-      userdata: data
-    };
-
-    return this.http.post(`/my/account/sso-${userId}/change-address.json`, payload);
+  public static changeAddress(userId: string, orderId: string, data: ChangeAddressModel): Promise<RichResult<ResponseStatus>> {
+    return this.http.post(`/my/account/sso-${userId}/order/${orderId}/change-address.json`, data);
   }
 
   public static getEPaper(): Promise<RichResult<EPaper>> {

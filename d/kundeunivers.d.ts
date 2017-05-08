@@ -70,12 +70,6 @@ export interface ResponseStatus {
   status: string;
 }
 
-export interface UserDataRequest {
-  order_id: string;
-  sso_name: string;
-  userdata: any;
-}
-
 export interface EPaper {
   url: string;
   status: string;

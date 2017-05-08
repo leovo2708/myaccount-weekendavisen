@@ -28,10 +28,6 @@ export class OrdersComponent implements OnInit {
     this.mdDialog
       .open(ChangeAddressComponent, {
         data: {orderId}
-      })
-      .afterClosed()
-      .subscribe((result: any) => {
-        console.log('closed!', result);
       });
   }
 }

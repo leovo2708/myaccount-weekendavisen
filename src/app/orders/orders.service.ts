@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 
 import { ApiService } from '../core/api.service';
-import { ChangeAddressModel } from './change-address/change-address.model';
-import { OrderFull, OrdersResponse } from '../../../d/kundeunivers';
 import { LoadingService } from '../loading/loading.service';
+import { ChangeAddressModel } from '../../../d/kundeunivers.models';
+import {
+  OrderFull, OrdersResponse
+} from '../../../d/kundeunivers';
 
 @Injectable()
 export class OrdersService {

@@ -2,8 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 
-import { ChangeAddressModel } from './change-address.model';
 import { OrdersService } from '../orders.service';
+import { ChangeAddressModel } from '../../../../d/kundeunivers.models';
+import { MessageService } from '../../message/message.service';
 
 @Component({
   selector: 'app-change-address',
@@ -14,6 +15,7 @@ export class ChangeAddressComponent implements OnInit {
   formModel: ChangeAddressModel;
 
   constructor(@Inject(MD_DIALOG_DATA) private data: any,
+              private messageService: MessageService,
               private mdDialogRef: MdDialogRef<ChangeAddressComponent>,
               private ordersService: OrdersService) {
   }
@@ -31,6 +33,7 @@ export class ChangeAddressComponent implements OnInit {
       this.ordersService
         .changeAddress(this.data.orderId, this.formModel)
         .then(() => {
+          this.messageService.success('Your request has been accepted.');
           this.mdDialogRef.close();
         });
     }
