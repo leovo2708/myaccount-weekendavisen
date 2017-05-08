@@ -4,6 +4,7 @@ export interface Order {
   service_type: string;
   status: string;
   delivery_address: string;
+  suspend_allowed: boolean;
 }
 
 export interface Complaint {
@@ -72,5 +73,30 @@ export interface ResponseStatus {
 
 export interface EPaper {
   url: string;
+  status: string;
+}
+
+export interface ChangeAddressPayload {
+  lastname?: string;
+  zipcode?: string;
+  city?: string;
+  street?: string;
+  number?: string;
+  phone?: string;
+  message?: string;
+  firstname?: string;
+  co?: string;
+  letter?: string;
+  floor?: string;
+  side?: string;
+}
+
+export class SuspendOrderPayload {
+  fromdate?: string;
+  enddate?: string;
+  digital_access?: boolean;
+}
+
+export interface SuspendOrderResponse {
   status: string;
 }

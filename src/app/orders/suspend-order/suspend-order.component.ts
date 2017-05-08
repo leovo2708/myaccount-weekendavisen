@@ -1,37 +1,36 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 
 import { OrdersService } from '../orders.service';
 import { MessageService } from '../../message/message.service';
-import { ChangeAddressModel } from './change-address.model';
+import { SuspendOrderModel } from './suspend-order.model';
 
 @Component({
-  selector: 'app-change-address',
-  templateUrl: './change-address.component.html',
-  styleUrls: ['./change-address.component.scss']
+  selector: 'app-suspend-order',
+  templateUrl: './suspend-order.component.html',
+  styleUrls: ['./suspend-order.component.scss']
 })
-export class ChangeAddressComponent implements OnInit {
-  formModel: ChangeAddressModel;
+export class SuspendOrderComponent implements OnInit {
+  formModel: SuspendOrderModel;
 
   constructor(@Inject(MD_DIALOG_DATA) private orderDialogData: {orderId: string},
               private messageService: MessageService,
-              private mdDialogRef: MdDialogRef<ChangeAddressComponent>,
+              private mdDialogRef: MdDialogRef<SuspendOrderComponent>,
               private ordersService: OrdersService) {
   }
 
   ngOnInit(): void {
-    this.formModel = new ChangeAddressModel();
+    this.formModel = new SuspendOrderModel();
   }
 
   cancel(): void {
     this.mdDialogRef.close();
   }
 
-  save(form: FormGroup): void {
+  suspend(form: FormGroup): void {
     if (form.valid) {
-      this.ordersService
-        .changeAddress(this.orderDialogData.orderId, this.formModel)
+      this.ordersService.suspendOrder(this.orderDialogData.orderId, this.formModel)
         .then(() => {
           this.messageService.success('Your request has been accepted.');
           this.mdDialogRef.close();

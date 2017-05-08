@@ -1,0 +1,28 @@
+<h1 md-dialog-title>Vacation changes</h1>
+<md-dialog-content>
+  <form #suspendForm="ngForm">
+    <div>
+      <md-input-container>
+        <input name="fromDate" mdInput placeholder="Start date" type="date"
+               [(ngModel)]="formModel.fromdate">
+      </md-input-container>
+    </div>
+    <div>
+      <md-input-container>
+        <input name="endDate" mdInput placeholder="End date" type="date"
+               [(ngModel)]="formModel.enddate">
+      </md-input-container>
+    </div>
+    <div>
+      <md-checkbox name="digitalAccess" [(ngModel)]="formModel.digital_access">
+        Keep digital access
+      </md-checkbox>
+    </div>
+  </form>
+</md-dialog-content>
+<md-dialog-actions class="actions">
+  <button md-raised-button (click)="cancel()">Cancel</button>
+  <button md-raised-button color="primary" (click)="suspend(suspendForm)">
+    Send request
+  </button>
+</md-dialog-actions>

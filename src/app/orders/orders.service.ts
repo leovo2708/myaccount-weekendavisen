@@ -3,9 +3,10 @@ import { Response } from '@angular/http';
 
 import { ApiService } from '../core/api.service';
 import { LoadingService } from '../loading/loading.service';
-import { ChangeAddressModel } from '../../../d/kundeunivers.models';
+import { ChangeAddressModel } from './change-address/change-address.model';
+import { SuspendOrderModel } from './suspend-order/suspend-order.model';
 import {
-  OrderFull, OrdersResponse
+  OrderFull, OrdersResponse, SuspendOrderResponse
 } from '../../../d/kundeunivers';
 
 @Injectable()
@@ -35,6 +36,15 @@ export class OrdersService {
     this.loadingService.show();
 
     return this.api.get(`/kundeunivers/orders/${orderId}`)
+      .finally(() => this.loadingService.hide())
+      .toPromise()
+      .then((response: Response) => response.json());
+  }
+
+  suspendOrder(orderId: string, payload: SuspendOrderModel): Promise<SuspendOrderResponse> {
+    this.loadingService.show();
+
+    return this.api.put(`/kundeunivers/orders/${orderId}/suspend`, payload)
       .finally(() => this.loadingService.hide())
       .toPromise()
       .then((response: Response) => response.json());
