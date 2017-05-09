@@ -100,3 +100,7 @@ export class SuspendOrderPayload {
 export interface SuspendOrderResponse {
   status: string;
 }
+
+export interface RemoveOrderResponse {
+  removed_sap_order_id?: string;
+}

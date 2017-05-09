@@ -35,4 +35,8 @@ export class Kundeunivers {
   public static suspendOrder(userId: string, orderId: string, payload: SuspendOrderPayload): Promise<RichResult<SuspendOrderResponse>> {
     return this.http.post(`/my/account/sso-${userId}/order/${orderId}/suspend-order.json`, payload);
   }
+
+  public static removeOrder(userId: string, orderId: string): Promise<RichResult<ResponseStatus>> {
+    return this.http.post(`/my/account/${userId}/order/${orderId}/remove-order.json`);
+  }
 }

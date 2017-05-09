@@ -19,6 +19,7 @@
         <button md-menu-item [routerLink]="['/orders', order.sap_order_id]">Details</button>
         <button md-menu-item (click)="changeAddress(order.sap_order_id)">Change address</button>
         <button md-menu-item *ngIf="order.suspend_allowed" (click)="suspendOrder(order.sap_order_id)">Vacation changes</button>
+        <button md-menu-item (click)="removeOrder(order.sap_order_id)">Remove order</button>
       </md-menu>
     </md-card-actions>
   </md-card>

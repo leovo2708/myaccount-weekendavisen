@@ -2,7 +2,7 @@ import { IReply, Request, Server } from 'hapi';
 
 import { Kundeunivers } from './kundeunivers';
 import {
-  OrderFull, OrdersResponse, UserProfile, FAQ, EPaper
+  OrderFull, OrdersResponse, RemoveOrderResponse, UserProfile, FAQ, EPaper
 } from '../../../d/kundeunivers';
 import { AuthTicket } from '../../../d/auth';
 import { JWT } from '../jwt';
@@ -62,6 +62,18 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
 
       Kundeunivers.changeAddress(authTicket.accountInfo.UID, request.params.orderId, request.payload)
         .then(() => reply(request.payload).code(202))
+        .catch((result: Result) => reply(HttpHelper.wrapError(result)));
+    }
+  });
+
+  server.route({
+    method: 'DELETE',
+    path: '/orders/{orderId}',
+    handler: (request: Request, reply: IReply): void => {
+      const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
+
+      Kundeunivers.removeOrder(authTicket.accountInfo.UID, request.params.orderId)
+        .then((result: RichResult<RemoveOrderResponse>) => reply(result.body))
         .catch((result: Result) => reply(HttpHelper.wrapError(result)));
     }
   });
