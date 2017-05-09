@@ -4,6 +4,7 @@ import { MdDialog } from '@angular/material';
 import { Order, OrdersResponse } from '../../../d/kundeunivers';
 import { OrdersService } from './orders.service';
 import { ChangeAddressComponent } from './change-address/change-address.component';
+import { SuspendOrderComponent } from './suspend-order/suspend-order.component';
 
 @Component({
   selector: 'app-orders',
@@ -27,6 +28,13 @@ export class OrdersComponent implements OnInit {
   changeAddress(orderId: string): void {
     this.mdDialog
       .open(ChangeAddressComponent, {
+        data: {orderId}
+      });
+  }
+
+  suspendOrder(orderId: string): void {
+    this.mdDialog
+      .open(SuspendOrderComponent, {
         data: {orderId}
       });
   }

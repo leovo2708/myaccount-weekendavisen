@@ -67,6 +67,18 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
   });
 
   server.route({
+    method: 'PUT',
+    path: '/orders/{orderId}/suspend',
+    handler: (request: Request, reply: IReply): void => {
+      const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
+
+      Kundeunivers.suspendOrder(authTicket.accountInfo.data.sso_uid, request.params.orderId, request.payload)
+        .then(() => reply(request.payload).code(202))
+        .catch((result: Result) => reply(HttpHelper.wrapError(result)));
+    }
+  });
+
+  server.route({
     method: 'GET',
     path: '/user',
     handler: (request: Request, reply: IReply): void => {
