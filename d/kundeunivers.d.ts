@@ -55,8 +55,6 @@ export interface OrderFull extends Order {
 
 export interface OrdersResponse {
   orders: Order[];
-  removed_sap_order_id?: string;
-  added_sap_order_id?: string;
 }
 
 export interface UserProfile {
@@ -101,4 +99,8 @@ export class SuspendOrderPayload {
 
 export interface SuspendOrderResponse {
   status: string;
+}
+
+export interface RemoveOrderResponse {
+  removed_sap_order_id?: string;
 }

@@ -37,6 +37,6 @@ export class Kundeunivers {
   }
 
   public static removeOrder(userId: string, orderId: string): Promise<RichResult<ResponseStatus>> {
-    return this.http.get(`/my/account/${userId}/order/${orderId}/remove-order.json`);
+    return this.http.post(`/my/account/${userId}/order/${orderId}/remove-order.json`);
   }
 }

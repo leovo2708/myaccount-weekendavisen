@@ -6,7 +6,7 @@ import { LoadingService } from '../loading/loading.service';
 import { ChangeAddressModel } from './change-address/change-address.model';
 import { SuspendOrderModel } from './suspend-order/suspend-order.model';
 import {
-  OrderFull, OrdersResponse, SuspendOrderResponse
+  OrderFull, OrdersResponse, SuspendOrderResponse, RemoveOrderResponse
 } from '../../../d/kundeunivers';
 
 @Injectable()
@@ -50,7 +50,7 @@ export class OrdersService {
       .then((response: Response) => response.json());
   }
 
-  reomveOrder(orderId: string): Promise<OrdersResponse> {
+  removeOrder(orderId: string): Promise<RemoveOrderResponse> {
     this.loadingService.show();
 
     return this.api.delete(`/kundeunivers/orders/${orderId}`)

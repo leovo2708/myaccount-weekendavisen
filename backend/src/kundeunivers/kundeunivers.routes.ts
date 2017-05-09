@@ -2,7 +2,7 @@ import { IReply, Request, Server } from 'hapi';
 
 import { Kundeunivers } from './kundeunivers';
 import {
-  OrderFull, OrdersResponse, UserProfile, FAQ, EPaper
+  OrderFull, OrdersResponse, RemoveOrderResponse, UserProfile, FAQ, EPaper
 } from '../../../d/kundeunivers';
 import { AuthTicket } from '../../../d/auth';
 import { JWT } from '../jwt';
@@ -73,7 +73,7 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
       const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
 
       Kundeunivers.removeOrder(authTicket.accountInfo.UID, request.params.orderId)
-        .then(() => reply(request.payload).code(202))
+        .then((result: RichResult<RemoveOrderResponse>) => reply(result.body))
         .catch((result: Result) => reply(HttpHelper.wrapError(result)));
     }
   });
