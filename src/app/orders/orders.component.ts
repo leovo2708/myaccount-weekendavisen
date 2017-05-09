@@ -18,11 +18,15 @@ export class OrdersComponent implements OnInit {
               private ordersService: OrdersService) {
   }
 
-  ngOnInit(): void {
+  getOrders(): void {
     this.ordersService.getOrders()
       .then((response: OrdersResponse) => {
         this.orders = response.orders;
       });
+  }
+
+  ngOnInit(): void {
+    this.getOrders();
   }
 
   changeAddress(orderId: string): void {
@@ -36,6 +40,16 @@ export class OrdersComponent implements OnInit {
     this.mdDialog
       .open(SuspendOrderComponent, {
         data: {orderId}
+      });
+  }
+
+  removeOrder(orderId: string): void {
+    this.ordersService.reomveOrder(orderId)
+      .then((response: OrdersResponse) => {
+        // Reload orders in case of succesfull deleting
+        if (response.removed_sap_order_id == orderId) {
+          this.getOrders();
+        }
       });
   }
 }

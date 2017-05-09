@@ -55,6 +55,8 @@ export interface OrderFull extends Order {
 
 export interface OrdersResponse {
   orders: Order[];
+  removed_sap_order_id?: string;
+  added_sap_order_id?: string;
 }
 
 export interface UserProfile {

@@ -49,4 +49,13 @@ export class OrdersService {
       .toPromise()
       .then((response: Response) => response.json());
   }
+
+  reomveOrder(orderId: string): Promise<OrdersResponse> {
+    this.loadingService.show();
+
+    return this.api.delete(`/kundeunivers/orders/${orderId}`)
+      .finally(() => this.loadingService.hide())
+      .toPromise()
+      .then((response: Response) => response.json());
+  }
 }

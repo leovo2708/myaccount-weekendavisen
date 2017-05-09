@@ -67,6 +67,18 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
   });
 
   server.route({
+    method: 'DELETE',
+    path: '/orders/{orderId}',
+    handler: (request: Request, reply: IReply): void => {
+      const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
+
+      Kundeunivers.removeOrder(authTicket.accountInfo.UID, request.params.orderId)
+        .then(() => reply(request.payload).code(202))
+        .catch((result: Result) => reply(HttpHelper.wrapError(result)));
+    }
+  });
+
+  server.route({
     method: 'PUT',
     path: '/orders/{orderId}/suspend',
     handler: (request: Request, reply: IReply): void => {
