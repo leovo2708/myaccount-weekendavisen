@@ -36,7 +36,7 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
     handler: (request: Request, reply: IReply): void => {
       const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
 
-      Kundeunivers.getUserOrders(authTicket.accountInfo.data.sso_uid)
+      Kundeunivers.getUserOrders(authTicket.accountInfo.UID)
         .then((result: RichResult<OrdersResponse>) => reply(result.body))
         .catch((result: Result) => reply(HttpHelper.wrapError(result)));
     }
@@ -48,7 +48,7 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
     handler: (request: Request, reply: IReply): void => {
       const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
 
-      Kundeunivers.getUserOrder(authTicket.accountInfo.data.sso_uid, request.params.orderId)
+      Kundeunivers.getUserOrder(authTicket.accountInfo.UID, request.params.orderId)
         .then((result: RichResult<OrderFull>) => reply(result.body))
         .catch((result: Result) => reply(HttpHelper.wrapError(result)));
     }
@@ -60,7 +60,7 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
     handler: (request: Request, reply: IReply): void => {
       const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
 
-      Kundeunivers.changeAddress(authTicket.accountInfo.data.sso_uid, request.params.orderId, request.payload)
+      Kundeunivers.changeAddress(authTicket.accountInfo.UID, request.params.orderId, request.payload)
         .then(() => reply(request.payload).code(202))
         .catch((result: Result) => reply(HttpHelper.wrapError(result)));
     }
@@ -84,7 +84,7 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
     handler: (request: Request, reply: IReply): void => {
       const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
 
-      Kundeunivers.getUserProfile(authTicket.accountInfo.data.sso_uid)
+      Kundeunivers.getUserProfile(authTicket.accountInfo.UID)
         .then((result: RichResult<UserProfile>) => reply(result.body))
         .catch((result: Result) => reply(HttpHelper.wrapError(result)));
     }
