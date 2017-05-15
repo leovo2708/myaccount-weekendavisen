@@ -35,9 +35,13 @@ export interface Delivery {
   address: string;
 }
 
-// TODO: Update type after KU API would be updated
 export interface FAQ {
-  [key: string]: any;
+  body: string;
+  title: string;
+}
+
+export interface FaqResponse {
+  result: FAQ[];
 }
 
 export interface OrderFull extends Order {
