@@ -8,15 +8,16 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "dev": "concurrently \"npm run server:compile -- -w\" \"npm run server:run\"",
+    "start": "npm run server",
     "server:lint": "tslint src/**/*.ts",
     "server:compile": "tsc -p backend",
-    "dev": "concurrently \"npm run server:compile -- -w\" \"npm run server:run\"",
     "server:run": "nodemon backend/dist --port $PORT",
     "server": "npm run server:compile && npm run server:run",
     "client:build": "ng build --prod --output-path=./dist",
-    "start": "npm run start:backend & npm run start:client",
-    "start:backend": "node ./backend/dist/index.js",
-    "start:client": "http-server ./dist/ -p 4200"
+    "docker:start": "npm run docker:start:backend & npm run docker:start:client",
+    "docker:start:backend": "node ./backend/dist/index.js",
+    "docker:start:client": "http-server ./dist/ -p 4200"
   },
   "private": true,
   "dependencies": {

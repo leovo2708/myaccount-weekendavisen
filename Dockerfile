@@ -27,4 +27,4 @@ RUN npm install -g http-server
 EXPOSE 4200 8000
 
 # When starting a container with our image, this command will be run.
-CMD ["npm", "start"]
+CMD ["npm", "docker:start"]
