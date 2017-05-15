@@ -4,7 +4,7 @@ FROM ubuntu:16.04
 RUN apt-get update
 RUN apt-get install -y wget
 
-ENV NODE_VERSION v6.9.1
+ENV NODE_VERSION v7.10.0
 
 # Downloading and installing Node.
 RUN wget -O - https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64.tar.gz \
