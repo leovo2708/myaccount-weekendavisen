@@ -6,9 +6,9 @@ export NODE_TLS_REJECT_UNAUTHORIZED=1
 
 export JWT_SECRET=secret_jwt_key
 
-export POC_APPLICATION_APP_ID=test_sso_app
-export POC_APPLICATION_APP_SECRET=gfkj23h4kjh453kfhfsdkkgfj393jkldl
-export POC_APPLICATION_SSO_URL=http://BPC_API_Url
+export BPC_APP_ID=test_sso_app
+export BPC_APP_SECRET=gfkj23h4kjh453kfhfsdkkgfj393jkldl
+export BPC_URL=http://BPC_API_Url
 
 export KU_APPLICATION_URL=http://Kundeunivers_API_Url
 

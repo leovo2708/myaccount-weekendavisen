@@ -6,11 +6,11 @@ import { RichResult } from '../../../d/http';
 export class BPC {
   private static appTicket: BaseTicket;
   private static ticketTimeoutID: NodeJS.Timer;
-  private static http: Http = new Http(process.env.POC_APPLICATION_SSO_URL);
+  private static http: Http = new Http(process.env.BPC_URL ? process.env.BPC_URL : process.env.POC_APPLICATION_SSO_URL);
 
   public static getRsvp(accountInfo: AccountInfo): Promise<RichResult<string>> {
     return BPC.http.get('/rsvp', {
-      app: process.env.POC_APPLICATION_APP_ID,
+      app: process.env.BPC_APP_ID ? process.env.BPC_APP_ID : process.env.POC_APPLICATION_APP_ID,
       provider: 'gigya',
       UID: accountInfo.UID,
       UIDSignature: accountInfo.UIDSignature,
@@ -29,8 +29,8 @@ export class BPC {
 
   public static saveAppTicket(): void {
     const appTicket: BaseTicket = {
-      id: process.env.POC_APPLICATION_APP_ID,
-      key: process.env.POC_APPLICATION_APP_SECRET,
+      id: process.env.BPC_APP_ID ? process.env.BPC_APP_ID : process.env.POC_APPLICATION_APP_ID,
+      key: process.env.BPC_APP_SECRET ? process.env.BPC_APP_SECRET : process.env.POC_APPLICATION_APP_SECRET,
       algorithm: 'sha256'
     };
 
