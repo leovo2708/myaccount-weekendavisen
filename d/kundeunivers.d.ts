@@ -36,8 +36,12 @@ export interface Delivery {
 }
 
 export interface FAQ {
-  title: string;
   body: string;
+  title: string;
+}
+
+export interface FaqResponse {
+  result: FAQ[];
 }
 
 export interface OrderFull extends Order {

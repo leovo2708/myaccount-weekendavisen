@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { environment } from '../../environments/environment';
 import { FaqService } from './faq.service';
-import { FAQ } from '../../../d/kundeunivers';
+import { FAQ, FaqResponse } from '../../../d/kundeunivers';
 
 @Component({
   selector: 'app-faq',
@@ -27,7 +27,7 @@ export class FaqComponent implements OnInit {
 
   ngOnInit(): void {
     this.faqService.getFaq(environment.TID)
-      .then((response: FAQ) => {
+      .then((response: FaqResponse) => {
         this.faq = response.result;
       });
   }

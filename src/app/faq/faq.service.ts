@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 
 import { ApiService } from '../core/api.service';
-import { FAQ } from '../../../d/kundeunivers';
+import { FaqResponse } from '../../../d/kundeunivers';
 import { LoadingService } from '../loading/loading.service';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class FaqService {
               private loadingService: LoadingService) {
   }
 
-  getFaq(termId: string): Promise<FAQ> {
+  getFaq(termId: string): Promise<FaqResponse> {
     this.loadingService.show();
 
     return this.api.get(`/kundeunivers/faq/${termId}`)
