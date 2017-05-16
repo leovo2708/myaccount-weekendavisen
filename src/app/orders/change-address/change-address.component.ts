@@ -6,6 +6,10 @@ import { OrdersService } from '../orders.service';
 import { MessageService } from '../../message/message.service';
 import { ChangeAddressModel } from './change-address.model';
 
+export class OrderDialogData {
+  public orderId: string = '';
+}
+
 @Component({
   selector: 'app-change-address',
   templateUrl: './change-address.component.html',
@@ -14,7 +18,7 @@ import { ChangeAddressModel } from './change-address.model';
 export class ChangeAddressComponent implements OnInit {
   formModel: ChangeAddressModel;
 
-  constructor(@Inject(MD_DIALOG_DATA) private orderDialogData: {orderId: string},
+  constructor(@Inject(MD_DIALOG_DATA) private orderDialogData: OrderDialogData,
               private messageService: MessageService,
               private mdDialogRef: MdDialogRef<ChangeAddressComponent>,
               private ordersService: OrdersService) {

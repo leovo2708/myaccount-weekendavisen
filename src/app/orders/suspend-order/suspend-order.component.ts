@@ -6,6 +6,10 @@ import { OrdersService } from '../orders.service';
 import { MessageService } from '../../message/message.service';
 import { SuspendOrderModel } from './suspend-order.model';
 
+export class OrderDialogData {
+  public orderId: string = '';
+}
+
 @Component({
   selector: 'app-suspend-order',
   templateUrl: './suspend-order.component.html',
@@ -14,7 +18,7 @@ import { SuspendOrderModel } from './suspend-order.model';
 export class SuspendOrderComponent implements OnInit {
   formModel: SuspendOrderModel;
 
-  constructor(@Inject(MD_DIALOG_DATA) private orderDialogData: {orderId: string},
+  constructor(@Inject(MD_DIALOG_DATA) private orderDialogData: OrderDialogData,
               private messageService: MessageService,
               private mdDialogRef: MdDialogRef<SuspendOrderComponent>,
               private ordersService: OrdersService) {

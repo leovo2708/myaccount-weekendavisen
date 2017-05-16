@@ -65,7 +65,7 @@ export class AuthService {
       });
   }
 
-  logOut(): Promise<void> {
+  logOut(): Promise<any> {
     return this.gigyaService.logOut()
       .then((response: GigyaResponse) => {
         this.clearTickets();
