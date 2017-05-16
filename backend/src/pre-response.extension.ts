@@ -1,4 +1,4 @@
-import { IReply, Request, Response } from 'hapi';
+import { ReplyWithContinue, Request, Response } from 'hapi';
 import * as Boom from 'boom';
 import { Headers } from 'request';
 
@@ -24,7 +24,7 @@ function getHeaders(origin: string): Headers {
   };
 }
 
-export function preResponseExtension(request: Request, reply: IReply): void {
+export function preResponseExtension(request: Request, reply: ReplyWithContinue): void {
   if (request.response.isBoom) {
     const response: Boom.BoomError = <any>request.response;
 

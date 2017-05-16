@@ -1,4 +1,4 @@
-import { IReply, Request, Server } from 'hapi';
+import { Base_Reply, Request, Server } from 'hapi';
 
 import { Kundeunivers } from './kundeunivers';
 import {
@@ -13,7 +13,7 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
   server.route({
     method: 'GET',
     path: '/epaper',
-    handler: (request: Request, reply: IReply): void => {
+    handler: (request: Request, reply: Base_Reply): void => {
       Kundeunivers.getEPaper()
         .then((result: RichResult<EPaper>) => reply(result.body))
         .catch((result: Result) => reply(HttpHelper.wrapError(result)));
@@ -23,7 +23,7 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
   server.route({
     method: 'GET',
     path: '/faq/{termId}',
-    handler: (request: Request, reply: IReply): void => {
+    handler: (request: Request, reply: Base_Reply): void => {
       Kundeunivers.getFAQ(request.params.termId)
         .then((result: RichResult<FAQ>) => reply(result.body))
         .catch((result: Result) => reply(HttpHelper.wrapError(result)));
@@ -33,7 +33,7 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
   server.route({
     method: 'GET',
     path: '/orders',
-    handler: (request: Request, reply: IReply): void => {
+    handler: (request: Request, reply: Base_Reply): void => {
       const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
 
       Kundeunivers.getUserOrders(authTicket.accountInfo.UID)
@@ -45,7 +45,7 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
   server.route({
     method: 'GET',
     path: '/orders/{orderId}',
-    handler: (request: Request, reply: IReply): void => {
+    handler: (request: Request, reply: Base_Reply): void => {
       const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
 
       Kundeunivers.getUserOrder(authTicket.accountInfo.UID, request.params.orderId)
@@ -57,7 +57,7 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
   server.route({
     method: 'PUT',
     path: '/orders/{orderId}/address',
-    handler: (request: Request, reply: IReply): void => {
+    handler: (request: Request, reply: Base_Reply): void => {
       const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
 
       Kundeunivers.changeAddress(authTicket.accountInfo.UID, request.params.orderId, request.payload)
@@ -69,7 +69,7 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
   server.route({
     method: 'DELETE',
     path: '/orders/{orderId}',
-    handler: (request: Request, reply: IReply): void => {
+    handler: (request: Request, reply: Base_Reply): void => {
       const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
 
       Kundeunivers.removeOrder(authTicket.accountInfo.UID, request.params.orderId)
@@ -81,7 +81,7 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
   server.route({
     method: 'PUT',
     path: '/orders/{orderId}/suspend',
-    handler: (request: Request, reply: IReply): void => {
+    handler: (request: Request, reply: Base_Reply): void => {
       const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
 
       Kundeunivers.suspendOrder(authTicket.accountInfo.data.sso_uid, request.params.orderId, request.payload)
@@ -93,7 +93,7 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
   server.route({
     method: 'GET',
     path: '/user',
-    handler: (request: Request, reply: IReply): void => {
+    handler: (request: Request, reply: Base_Reply): void => {
       const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
 
       Kundeunivers.getUserProfile(authTicket.accountInfo.UID)

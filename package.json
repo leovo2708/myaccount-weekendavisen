@@ -15,6 +15,9 @@
     "server:run": "nodemon backend/dist --port $PORT",
     "server": "npm run server:compile && npm run server:run",
     "client:build": "ng build --prod --output-path=./dist",
+    "docker:build": "npm run docker:build:backend & npm run docker:build:client",
+    "docker:build:backend": "./node_modules/typescript/bin/tsc -p backend",
+    "docker:build:client": "./node_modules/@angular/cli/bin/ng build --target=production --environment=testing",
     "docker:start": "npm run docker:start:backend & npm run docker:start:client",
     "docker:start:backend": "node ./backend/dist/index.js",
     "docker:start:client": "http-server ./dist/ -p 4200"

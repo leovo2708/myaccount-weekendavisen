@@ -1,4 +1,4 @@
-import { IReply, Request, Server } from '@types/hapi';
+import { Base_Reply, Request, Server } from '@types/hapi';
 
 import { BPC } from './bpc';
 import { Ticket } from '../../../d/bpc';
@@ -13,7 +13,7 @@ export function UserRoutes(server: Server, options: {}, next: Function): void {
     config: {
       auth: false
     },
-    handler: (request: Request, reply: IReply): void => {
+    handler: (request: Request, reply: Base_Reply): void => {
       BPC.getRsvp(request.payload.accountInfo)
         .then((result: RichResult<string>) => BPC.getUserTicket(result.body))
         .then((result: RichResult<Ticket>) => JWT.generateToken(request.payload.accountInfo, result.body))
@@ -27,7 +27,7 @@ export function UserRoutes(server: Server, options: {}, next: Function): void {
   server.route({
     method: 'GET',
     path: '/me',
-    handler: (request: Request, reply: IReply): void => {
+    handler: (request: Request, reply: Base_Reply): void => {
       BPC.me(JWT.getAuthTicket(request.headers.authorization).bpcTicket)
         .then((result: Result) => {
           reply(result.body);
