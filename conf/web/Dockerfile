@@ -1,4 +1,4 @@
-FROM berlingskemedia/site-manager:latest
+FROM berlingskemedia/myaccount:latest
 
 # Update and install required packages.
 RUN export TERM=xterm
