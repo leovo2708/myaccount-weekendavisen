@@ -1,0 +1,37 @@
+import { ComponentFixture } from '@angular/core/testing';
+import { DebugElement } from '@angular/core';
+
+import { RootComponent } from './root.component';
+import { By } from '@angular/platform-browser';
+
+export class RootPage {
+  component: RootComponent;
+  debugElement: DebugElement;
+
+  constructor(private fixture: ComponentFixture<RootComponent>) {
+    this.component = fixture.componentInstance;
+    this.debugElement = fixture.debugElement;
+
+    this.fixture.detectChanges();
+  }
+
+  get topBarElement(): DebugElement {
+    return this.debugElement.query(By.css('app-top-bar'));
+  }
+
+  get loadingElement(): DebugElement {
+    return this.debugElement.query(By.css('app-loading'));
+  }
+
+  get mainMenuElement(): DebugElement {
+    return this.debugElement.query(By.css('app-main-menu'));
+  }
+
+  get routerOutletElement(): DebugElement {
+    return this.debugElement.query(By.css('router-outlet'));
+  }
+
+  get footerElement(): DebugElement {
+    return this.debugElement.query(By.css('app-footer'));
+  }
+}

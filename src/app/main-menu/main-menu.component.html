@@ -8,6 +8,6 @@
     <span *ngIf="item.title">{{item.title}}</span>
   </a>
   <app-loading-ellipsis md-tab-link *ngIf="ePaperLoading"></app-loading-ellipsis>
-  <a md-tab-link [href]="ePaperUrl" *ngIf="!ePaperLoading && ePaperUrl.length > 0"
+  <a md-tab-link [href]="ePaperUrl" *ngIf="!ePaperLoading && ePaperUrl && ePaperUrl.length > 0"
      target="_blank">e-Paper</a>
 </nav>

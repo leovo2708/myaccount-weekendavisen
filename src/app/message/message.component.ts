@@ -40,7 +40,7 @@ export class MessageComponent implements OnInit {
     });
   }
 
-  applyTimeout(message: Message): void {
+  private applyTimeout(message: Message): void {
     clearTimeout(this.latestTimeout);
 
     if (message.displayTime > 0) {

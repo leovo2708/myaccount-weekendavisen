@@ -1,32 +1,22 @@
 import {TestBed, async, ComponentFixture} from '@angular/core/testing';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { By } from '@angular/platform-browser';
+
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-  let fixture: ComponentFixture<AppComponent>;
-
-  beforeEach(() => {
+  it('should contain all necessary components', async(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent
       ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     });
-    TestBed.compileComponents();
-    fixture = TestBed.createComponent(AppComponent);
-  });
 
-  it('should create the app', async(() => {
-    const app: any = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  }));
+    const fixture: ComponentFixture<AppComponent> = TestBed.createComponent(AppComponent);
+    const debugElement: DebugElement = fixture.debugElement;
 
-  it(`should have as title 'app works!'`, async(() => {
-    const app: any = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app works!');
-  }));
-
-  it('should render title in a h1 tag', async(() => {
-    fixture.detectChanges();
-    const compiled: any = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('app works!');
+    expect(debugElement.query(By.css('router-outlet'))).toBeTruthy();
+    expect(debugElement.query(By.css('app-message'))).toBeTruthy();
   }));
 });

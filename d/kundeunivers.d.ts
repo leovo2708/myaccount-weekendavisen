@@ -1,10 +1,10 @@
 export interface Order {
-  sap_order_id: string;
-  product_family: string;
-  service_type: string;
-  status: string;
-  delivery_address: string;
-  suspend_allowed: boolean;
+  sap_order_id?: string;
+  product_family?: string;
+  service_type?: string;
+  status?: string;
+  delivery_address?: string;
+  suspend_allowed?: boolean;
 }
 
 export interface Complaint {
@@ -45,16 +45,16 @@ export interface FaqResponse {
 }
 
 export interface OrderFull extends Order {
-  conditions_url: string;
-  product_family_extended: string;
-  billing_frequency: string;
-  delivery_method: string;
-  payment_method: string;
-  expiration_date: string;
-  billing_address: string;
-  split_delivery: Delivery[];
-  complaints: Complaint[];
-  transactions: Transaction[];
+  conditions_url?: string;
+  product_family_extended?: string;
+  billing_frequency?: string;
+  delivery_method?: string;
+  payment_method?: string;
+  expiration_date?: string;
+  billing_address?: string;
+  split_delivery?: Delivery[];
+  complaints?: Complaint[];
+  transactions?: Transaction[];
 }
 
 export interface OrdersResponse {

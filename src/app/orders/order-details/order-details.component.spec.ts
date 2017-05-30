@@ -1,25 +1,38 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { OrderDetailsComponent } from './order-details.component';
+import { OrdersStub } from '../orders.stub';
+import { OrdersService } from '../orders.service';
+import { ActivatedRouteStub } from '../../core/activated-route.stub';
+import { OrderDetailsPage } from './order-details.page';
 
 describe('OrderDetailsComponent', () => {
-  let component: OrderDetailsComponent;
-  let fixture: ComponentFixture<OrderDetailsComponent>;
+  const orderId: string = '12345';
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ OrderDetailsComponent ]
-    })
-    .compileComponents();
-  }));
+  let page: OrderDetailsPage;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OrderDetailsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    TestBed.configureTestingModule({
+      declarations: [ OrderDetailsComponent ],
+      providers: [
+        { provide: OrdersService, useClass: OrdersStub },
+        { provide: ActivatedRoute, useClass: ActivatedRouteStub}
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ]
+    });
+
+    const fixture: ComponentFixture<OrderDetailsComponent> = TestBed.createComponent(OrderDetailsComponent);
+    page = new OrderDetailsPage(fixture);
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  it('should get order details when received params', fakeAsync(() => {
+    page.receiveOrderIdParam(orderId);
+
+    expect(page.ordersService.getOrder).toHaveBeenCalledWith(orderId);
+    expect(page.headerElement.nativeElement.textContent).toContain(`#${page.order.sap_order_id}`);
+    expect(page.titleElement.nativeElement.textContent).toContain(page.order.product_family);
+    expect(page.deliveryAddressElement.nativeElement.textContent).toContain(page.order.delivery_address);
+  }));
 });

@@ -1,25 +1,47 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
+import { FormsModule } from '@angular/forms';
 
 import { SuspendOrderComponent } from './suspend-order.component';
+import { SuspendOrderModel } from './suspend-order.model';
+import { SuspendOrderPage } from './suspend-order.page';
+import { MessageStub } from '../../message/message.stub';
+import { MessageService } from '../../message/message.service';
+import { MdDialogRefStub } from '../../core/md-dialog-ref.stub';
+import { OrdersStub } from '../orders.stub';
+import { OrdersService } from '../orders.service';
 
 describe('SuspendOrderComponent', () => {
-  let component: SuspendOrderComponent;
-  let fixture: ComponentFixture<SuspendOrderComponent>;
+  const orderId: string = '12345';
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ SuspendOrderComponent ]
-    })
-    .compileComponents();
-  }));
+  let page: SuspendOrderPage;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SuspendOrderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    TestBed.configureTestingModule({
+      declarations: [ SuspendOrderComponent ],
+      imports: [ FormsModule ],
+      providers: [
+        { provide: MD_DIALOG_DATA, useValue: { orderId } },
+        { provide: MessageService, useClass: MessageStub },
+        { provide: MdDialogRef, useClass: MdDialogRefStub },
+        { provide: OrdersService, useClass: OrdersStub }
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
+    });
+
+    const fixture: ComponentFixture<SuspendOrderComponent> = TestBed.createComponent(SuspendOrderComponent);
+    page = new SuspendOrderPage(fixture);
+
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should initialize the form model', () => {
+    expect(page.component.formModel instanceof SuspendOrderModel).toBe(true);
+  });
+
+  it('should close the dialog', () => {
+    page.clickNthActionButton(0);
+
+    expect(page.mdDialogRef.close).toHaveBeenCalled();
   });
 });

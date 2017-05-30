@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { OrdersService } from '../orders.service';
 import { OrderFull } from '../../../../d/kundeunivers';
@@ -17,7 +17,7 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params: string[]) => {
+    this.route.params.subscribe((params: Params) => {
       this.ordersService.getOrder(params['orderId'])
         .then((order: OrderFull) => {
           this.order = order;

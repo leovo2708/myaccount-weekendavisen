@@ -1,25 +1,27 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RootComponent } from './root.component';
+import { RootPage } from './root.page';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('RootComponent', () => {
-  let component: RootComponent;
-  let fixture: ComponentFixture<RootComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ RootComponent ]
-    })
-    .compileComponents();
-  }));
+  let page: RootPage;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RootComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    TestBed.configureTestingModule({
+      declarations: [ RootComponent ],
+      schemas: [ NO_ERRORS_SCHEMA ]
+    });
+
+    const fixture: ComponentFixture<RootComponent> = TestBed.createComponent(RootComponent);
+    page = new RootPage(fixture);
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should contain all necessary components', () => {
+    expect(page.topBarElement).toBeTruthy();
+    expect(page.loadingElement).toBeTruthy();
+    expect(page.mainMenuElement).toBeTruthy();
+    expect(page.routerOutletElement).toBeTruthy();
+    expect(page.footerElement).toBeTruthy();
   });
 });

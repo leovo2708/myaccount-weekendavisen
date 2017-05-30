@@ -1,25 +1,19 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoadingEllipsisComponent } from './loading-ellipsis.component';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 describe('LoadingEllipsisComponent', () => {
-  let component: LoadingEllipsisComponent;
-  let fixture: ComponentFixture<LoadingEllipsisComponent>;
-
-  beforeEach(async(() => {
+  it('should create the component', () => {
     TestBed.configureTestingModule({
       declarations: [ LoadingEllipsisComponent ]
-    })
-    .compileComponents();
-  }));
+    });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(LoadingEllipsisComponent);
-    component = fixture.componentInstance;
+    const fixture: ComponentFixture<LoadingEllipsisComponent> = TestBed.createComponent(LoadingEllipsisComponent);
+    const dots: DebugElement[] = fixture.debugElement.queryAll(By.css('.ellipsis .dot'));
+
     fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(dots.length).toBe(3);
   });
 });
