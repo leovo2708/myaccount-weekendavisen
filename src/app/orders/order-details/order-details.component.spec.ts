@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { fakeAsync } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -14,7 +14,7 @@ describe('OrderDetailsComponent', () => {
   let page: OrderDetailsPage;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
+    page = new OrderDetailsPage(OrderDetailsComponent, {
       declarations: [ OrderDetailsComponent ],
       providers: [
         { provide: OrdersService, useClass: OrdersStub },
@@ -23,8 +23,7 @@ describe('OrderDetailsComponent', () => {
       schemas: [ NO_ERRORS_SCHEMA ]
     });
 
-    const fixture: ComponentFixture<OrderDetailsComponent> = TestBed.createComponent(OrderDetailsComponent);
-    page = new OrderDetailsPage(fixture);
+    page.component.ngOnInit();
   });
 
   it('should get order details when received params', fakeAsync(() => {

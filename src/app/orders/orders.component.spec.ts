@@ -1,6 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MdDialog, MdMenuModule } from '@angular/material';
 import {
+  async,
   ComponentFixture, fakeAsync, TestBed, tick
 } from '@angular/core/testing';
 
@@ -17,11 +18,10 @@ import { OrdersPage } from './orders.page';
 describe('OrdersComponent', () => {
   const orderId: string = '12345';
 
-  let fixture: ComponentFixture<OrdersComponent>;
   let page: OrdersPage;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
+    page = new OrdersPage(OrdersComponent, {
       declarations: [ OrdersComponent ],
       imports: [ MdMenuModule ],
       schemas: [ NO_ERRORS_SCHEMA ],
@@ -31,9 +31,6 @@ describe('OrdersComponent', () => {
         { provide: OrdersService, useClass: OrdersStub }
       ]
     });
-
-    fixture = TestBed.createComponent(OrdersComponent);
-    page = new OrdersPage(fixture);
   });
 
   it('should display initial list of orders', fakeAsync(() => {

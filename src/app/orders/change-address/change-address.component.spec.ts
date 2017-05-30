@@ -1,6 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
+import { MD_DIALOG_DATA, MdDialogRef, MdInputModule } from '@angular/material';
 
 import { ChangeAddressComponent } from './change-address.component';
 import { MessageService } from '../../message/message.service';
@@ -11,6 +10,7 @@ import { OrdersStub } from '../orders.stub';
 import { FormsModule } from '@angular/forms';
 import { ChangeAddressModel } from './change-address.model';
 import { ChangeAddressPage } from './change-address.page';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ChangeAddressComponent', () => {
   const orderId: string = '12345';
@@ -18,9 +18,9 @@ describe('ChangeAddressComponent', () => {
   let page: ChangeAddressPage;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
+    page = new ChangeAddressPage(ChangeAddressComponent, {
       declarations: [ ChangeAddressComponent ],
-      imports: [ FormsModule ],
+      imports: [ FormsModule, MdInputModule, NoopAnimationsModule ],
       providers: [
         { provide: MD_DIALOG_DATA, useValue: { orderId } },
         { provide: MessageService, useClass: MessageStub },
@@ -30,8 +30,7 @@ describe('ChangeAddressComponent', () => {
       schemas: [NO_ERRORS_SCHEMA]
     });
 
-    const fixture: ComponentFixture<ChangeAddressComponent> = TestBed.createComponent(ChangeAddressComponent);
-    page = new ChangeAddressPage(fixture);
+    page.fixture.detectChanges();
   });
 
   it('should init the form model', () => {

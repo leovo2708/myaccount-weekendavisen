@@ -1,26 +1,22 @@
-import { ComponentFixture, tick } from '@angular/core/testing';
+import { tick } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 import { TopBarComponent } from './top-bar.component';
 import { AuthService } from '../core/auth.service';
 import { AuthTicket } from '../../../d/auth';
-import { By } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { TestingPage } from '../common/testing-page';
 
-export class TopBarPage {
+export class TopBarPage extends TestingPage<TopBarComponent> {
   authService: AuthService;
   component: TopBarComponent;
   debugElement: DebugElement;
   router: Router;
 
-  constructor(private fixture: ComponentFixture<TopBarComponent>) {
-    this.component = fixture.componentInstance;
-    this.debugElement = fixture.debugElement;
+  initStubs(): void {
     this.authService = this.debugElement.injector.get(AuthService);
     this.router = this.debugElement.injector.get(Router);
-
-    this.initSpies();
-    fixture.detectChanges();
   }
 
   get authTicket(): AuthTicket {
@@ -47,7 +43,6 @@ export class TopBarPage {
     const buttons: DebugElement[] = menuElement.queryAll(By.css('[md-menu-item]'));
 
     buttons[index].triggerEventHandler('click', null);
-    this.fixture.detectChanges();
     tick();
   }
 

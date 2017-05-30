@@ -1,21 +1,26 @@
-import { ComponentFixture, tick } from '@angular/core/testing';
-
-import { FaqComponent } from './faq.component';
+import { tick } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
-import { FaqService } from './faq.service';
 import { By } from '@angular/platform-browser';
 
-export class FaqPage {
-  component: FaqComponent;
-  debugElement: DebugElement;
+import { FaqComponent } from './faq.component';
+import { FaqService } from './faq.service';
+import { TestingPage } from '../common/testing-page';
+
+export class FaqPage extends TestingPage<FaqComponent> {
   faqService: FaqService;
 
-  constructor(private fixture: ComponentFixture<FaqComponent>) {
-    this.component = fixture.componentInstance;
-    this.debugElement = fixture.debugElement;
+  initStubs(): void {
     this.faqService = this.debugElement.injector.get(FaqService);
+  }
 
-    this.initSpies();
+  initSpies(): void {
+    spyOn(this.faqService, 'getFaq').and.returnValue(Promise.resolve({
+      result: [
+        {title: 'Title 1', body: '<span></span>'},
+        {title: 'Title 2', body: '<p></p>'},
+        {title: 'Title 3', body: '<p><span></span></p>'}
+      ]
+    }));
   }
 
   get card(): DebugElement {
@@ -43,15 +48,5 @@ export class FaqPage {
     this.component.ngOnInit();
     tick();
     this.fixture.detectChanges();
-  }
-
-  private initSpies(): void {
-    spyOn(this.faqService, 'getFaq').and.returnValue(Promise.resolve({
-      result: [
-        {title: 'Title 1', body: '<span></span>'},
-        {title: 'Title 2', body: '<p></p>'},
-        {title: 'Title 3', body: '<p><span></span></p>'}
-      ]
-    }));
   }
 }

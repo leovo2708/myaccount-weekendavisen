@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-export function generateComponent(options: Component): Component {
+export function generateComponent(options: Component): any {
   const metadata: Component = {
     selector: options.selector,
     template: options.template || '<ng-content></ng-content>',

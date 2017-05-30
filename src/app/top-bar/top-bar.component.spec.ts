@@ -15,7 +15,7 @@ describe('TopBarComponent', () => {
   let page: TopBarPage;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
+    page = new TopBarPage(TopBarComponent, {
       declarations: [
         TopBarComponent,
         generateComponent({selector: 'md-menu', exportAs: 'mdMenu'})
@@ -28,8 +28,7 @@ describe('TopBarComponent', () => {
       schemas: [ NO_ERRORS_SCHEMA ]
     });
 
-    const fixture: ComponentFixture<TopBarComponent> = TestBed.createComponent(TopBarComponent);
-    page = new TopBarPage(fixture);
+    page.fixture.detectChanges();
   });
 
   it('should initially fetch account info', () => {

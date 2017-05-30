@@ -1,27 +1,27 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs/Subject';
 
 import { Message } from '../../../d/message';
 import { MessageService } from './message.service';
 import { MessageComponent } from './message.component';
+import { TestingPage } from '../common/testing-page';
 
-export class MessagePage {
-  private debugElement: DebugElement;
-  private messageService: MessageService;
-  private messageSubject: Subject<Message> = new Subject();
+export class MessagePage extends TestingPage<MessageComponent> {
+  messageService: MessageService;
+  messageSubject: Subject<Message>;
 
   static generateMessage(displayTime: number = 100, text: string = 'Foo bar!', color: string = 'warn'): Message {
     return { color, text, displayTime };
   }
 
-  constructor(private fixture: ComponentFixture<MessageComponent>) {
-    this.debugElement = fixture.debugElement;
-    this.messageService = this.debugElement.injector.get(MessageService);
+  initSpies(): void {
+    spyOnProperty(this.messageService, 'message', 'get').and.returnValue(this.messageSubject.asObservable());
+  }
 
-    this.initSpies();
-    this.fixture.componentInstance.ngOnInit();
+  initStubs(): void {
+    this.messageService = this.debugElement.injector.get(MessageService);
+    this.messageSubject = new Subject();
   }
 
   get container(): DebugElement {
@@ -59,9 +59,5 @@ export class MessagePage {
 
   updateView(): void {
     this.fixture.detectChanges();
-  }
-
-  private initSpies(): void {
-    spyOnProperty(this.messageService, 'message', 'get').and.returnValue(this.messageSubject.asObservable());
   }
 }

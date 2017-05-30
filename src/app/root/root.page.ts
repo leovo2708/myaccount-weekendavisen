@@ -1,19 +1,12 @@
-import { ComponentFixture } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 
 import { RootComponent } from './root.component';
 import { By } from '@angular/platform-browser';
+import { TestingPage } from '../common/testing-page';
 
-export class RootPage {
-  component: RootComponent;
-  debugElement: DebugElement;
-
-  constructor(private fixture: ComponentFixture<RootComponent>) {
-    this.component = fixture.componentInstance;
-    this.debugElement = fixture.debugElement;
-
-    this.fixture.detectChanges();
-  }
+export class RootPage extends TestingPage<RootComponent> {
+  initSpies(): void {}
+  initStubs(): void {}
 
   get topBarElement(): DebugElement {
     return this.debugElement.query(By.css('app-top-bar'));

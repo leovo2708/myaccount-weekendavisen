@@ -1,5 +1,4 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MessageComponent } from './message.component';
@@ -12,7 +11,7 @@ describe('MessageComponent', () => {
   let page: MessagePage;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
+    page = new MessagePage(MessageComponent, {
       declarations: [ MessageComponent ],
       imports: [ NoopAnimationsModule ],
       providers: [
@@ -21,7 +20,7 @@ describe('MessageComponent', () => {
       schemas: [NO_ERRORS_SCHEMA]
     });
 
-    page = new MessagePage(TestBed.createComponent(MessageComponent));
+    page.component.ngOnInit();
   });
 
   it('should show a message and hide it after some delay', (done: any) => {

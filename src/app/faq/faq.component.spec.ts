@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { fakeAsync } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { FaqComponent } from './faq.component';
@@ -11,7 +11,7 @@ describe('FaqComponent', () => {
   let page: FaqPage;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
+    page = new FaqPage(FaqComponent, {
       declarations: [
         FaqComponent,
         SanitizeHtmlPipe
@@ -22,8 +22,7 @@ describe('FaqComponent', () => {
       schemas: [ NO_ERRORS_SCHEMA ]
     });
 
-    const fixture: ComponentFixture<FaqComponent> = TestBed.createComponent(FaqComponent);
-    page = new FaqPage(fixture);
+    page.fixture.detectChanges();
   });
 
   it('should fetch FAQ', fakeAsync(() => {

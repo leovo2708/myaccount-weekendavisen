@@ -1,4 +1,3 @@
-import { ComponentFixture } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { MdDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
@@ -8,21 +7,21 @@ import { each } from 'lodash';
 import { ChangeAddressComponent } from './change-address.component';
 import { OrdersService } from '../orders.service';
 import { ChangeAddressModel } from './change-address.model';
+import { TestingPage } from '../../common/testing-page';
 
-export class ChangeAddressPage {
-  component: ChangeAddressComponent;
-  debugElement: DebugElement;
+export class ChangeAddressPage extends TestingPage<ChangeAddressComponent> {
   mdDialogRef: MdDialogRef<ChangeAddressComponent>;
   ordersService: OrdersService;
 
-  constructor(private fixture: ComponentFixture<ChangeAddressComponent>) {
-    this.component = fixture.componentInstance;
-    this.debugElement = fixture.debugElement;
+  initSpies(): void {
+    spyOn(this.component, 'save').and.callThrough();
+    spyOn(this.ordersService, 'changeAddress').and.returnValue(Promise.resolve(null));
+    spyOn(this.mdDialogRef, 'close').and.callThrough();
+  }
+
+  initStubs(): void {
     this.mdDialogRef = this.debugElement.injector.get(MdDialogRef);
     this.ordersService = this.debugElement.injector.get(OrdersService);
-
-    this.initSpies();
-    this.fixture.detectChanges();
   }
 
   get formModel(): ChangeAddressModel {
@@ -52,11 +51,5 @@ export class ChangeAddressPage {
 
   findInput(inputName: string): DebugElement {
     return this.debugElement.query(By.css(`[name="${inputName}"]`));
-  }
-
-  initSpies(): void {
-    spyOn(this.component, 'save').and.callThrough();
-    spyOn(this.ordersService, 'changeAddress').and.returnValue(Promise.resolve(null));
-    spyOn(this.mdDialogRef, 'close').and.callThrough();
   }
 }

@@ -1,4 +1,3 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { FormsModule } from '@angular/forms';
@@ -18,7 +17,7 @@ describe('SuspendOrderComponent', () => {
   let page: SuspendOrderPage;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
+    page = new SuspendOrderPage(SuspendOrderComponent, {
       declarations: [ SuspendOrderComponent ],
       imports: [ FormsModule ],
       providers: [
@@ -30,9 +29,7 @@ describe('SuspendOrderComponent', () => {
       schemas: [NO_ERRORS_SCHEMA]
     });
 
-    const fixture: ComponentFixture<SuspendOrderComponent> = TestBed.createComponent(SuspendOrderComponent);
-    page = new SuspendOrderPage(fixture);
-
+    page.component.ngOnInit();
   });
 
   it('should initialize the form model', () => {
