@@ -48,7 +48,7 @@ export class AuthService {
 
     return this.gigyaService.getUser()
       .then((accountInfo: AccountInfo) => {
-        if (GigyaService.isLoggedIn(accountInfo)) {
+        if (this.gigyaService.isLoggedIn(accountInfo)) {
           return this.api
             .post('/user/ticket', {accountInfo})
             .toPromise()

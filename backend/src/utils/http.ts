@@ -59,9 +59,7 @@ export class Http {
         if (error) {
           reject({error});
         } else {
-          if (this.logCalls) {
-            console.log(new Date(), method, response.statusCode, response.statusMessage, uri);
-          }
+          this.logCall(method, response, uri);
 
           if (response && response.statusCode > 399) {
             reject({response, body});
@@ -71,5 +69,11 @@ export class Http {
         }
       });
     });
+  }
+
+  private logCall(method: string, response: IncomingMessage, uri: string): void {
+    if (this.logCalls) {
+      console.log(new Date(), method, response.statusCode, response.statusMessage, uri);
+    }
   }
 }
