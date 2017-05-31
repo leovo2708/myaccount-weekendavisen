@@ -9,7 +9,7 @@ declare const gigya: Gigya;
 
 @Injectable()
 export class GigyaService {
-  static isLoggedIn(userInfo: AccountInfo): boolean {
+  isLoggedIn(userInfo: AccountInfo): boolean {
     return userInfo.errorCode === 0;
   }
 
