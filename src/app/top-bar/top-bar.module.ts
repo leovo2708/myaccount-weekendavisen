@@ -3,9 +3,11 @@ import { MdButtonModule, MdIconModule, MdMenuModule, MdToolbarModule } from '@an
 
 import { SharedModule } from '../shared/shared.module';
 import { TopBarComponent } from './top-bar.component';
+import { LogoModule } from '../logo/logo.module';
 
 @NgModule({
   imports: [
+    LogoModule,
     MdButtonModule,
     MdIconModule,
     MdMenuModule,

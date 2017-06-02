@@ -1,8 +1,10 @@
+@import 'branding';
+
 body {
   margin: 0;
 
   font: {
-    family: Roboto, "Helvetica Neue", sans-serif;
+    family: Arial, sans-serif;
   }
 }
 
@@ -13,5 +15,23 @@ a {
 iframe {
   border: {
     width: 0;
+  }
+}
+
+footer {
+  color: $utility-color;
+
+  h4 {
+    a {
+      color: $color-main;
+    }
+  }
+
+  a {
+    color: $utility-color;
+  }
+
+  a:hover {
+    color: $color-secondary;
   }
 }

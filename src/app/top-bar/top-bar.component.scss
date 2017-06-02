@@ -1,4 +1,12 @@
+@import '../../styles/branding';
+
+.top-bar {
+  background: #fff;
+  border-bottom: solid 10px $color-main;
+}
+
 .title {
+  color: $color-main;
   flex: 1 1 auto;
 }
 

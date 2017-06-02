@@ -35,7 +35,7 @@ export class TopBarPage extends TestingPage<TopBarComponent> {
   }
 
   get logoElement(): DebugElement {
-    return this.debugElement.query(By.css('.logo[routerLink="/dashboard"]'));
+    return this.debugElement.query(By.css('a[routerLink="/dashboard"] app-logo'));
   }
 
   clickNthMenuButton(index: number): void {
