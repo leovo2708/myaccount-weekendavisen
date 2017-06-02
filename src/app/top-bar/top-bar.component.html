@@ -1,5 +1,7 @@
-<md-toolbar class="TopBar">
-  <a routerLink="/dashboard" class="logo"></a>
+<md-toolbar class="top-bar">
+  <a routerLink="/dashboard">
+    <app-logo></app-logo>
+  </a>
   <span class="title">My account</span>
   <button md-icon-button [mdMenuTriggerFor]="menu">
     <img *ngIf="thumbnailURL" class="avatar" [src]="thumbnailURL">

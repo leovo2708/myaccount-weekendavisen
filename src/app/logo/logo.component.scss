@@ -1,0 +1,20 @@
+@import '../../styles/branding';
+
+.logo {
+  background: {
+    image: url($logo-url);
+    position: center center;
+    repeat: no-repeat;
+    size: contain;
+  }
+
+  &.normal {
+    width: 485px;
+    height: 50px;
+  }
+
+  &.small {
+    width: 339.5px;
+    height: 35px;
+  }
+}

@@ -1,0 +1,39 @@
+// colors
+$color-main: #00bcf2;
+$color-secondary: #00aff1;
+
+$background-color: #d6edfd;
+
+$text-color-main: #000;
+$text-color-secondary: #4a4a4a;
+$text-color-heavy: #333;
+$text-color-accent: #5BD2FF;
+
+$utility-color: #9b9b9b;
+$utility-color-light: #f0f0f0;
+
+$form-color-accent: #201748;
+$form-color-warn: #c80000;
+$form-color-disabled: #7F7F7F;
+$form-color-light: #D3D3D3;
+$form-color-very-light: #F8F4F4;
+
+
+// @deprecated material-specific
+@import '../../../node_modules/@angular/material/theming';
+@include mat-core();
+
+$wea-palette: map-merge($mat-light-blue, (
+  500: $color-main,
+  700: $color-secondary
+));
+
+$wea-app-primary: mat-palette($wea-palette, 500, 200);
+$wea-app-accent: mat-palette($mat-amber, 400, 200);
+$wea-app-warn: mat-palette($mat-red);
+$wea-app-theme: mat-light-theme($wea-app-primary, $wea-app-accent, $wea-app-warn);
+@include angular-material-theme($wea-app-theme);
+
+
+// logo
+$logo-url: '/assets/weekendavisen_logo.png';

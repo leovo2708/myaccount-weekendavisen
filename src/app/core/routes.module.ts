@@ -7,18 +7,21 @@ import { LoginComponent } from '../login/login.component';
 import { LoginGuard } from '../login/login.guard';
 import { LoginModule } from '../login/login.module';
 import { NotFoundComponent } from '../not-found/not-found.component';
-import {
-  OrderDetailsComponent
-} from '../orders/order-details/order-details.component';
+import { OrderDetailsComponent } from '../orders/order-details/order-details.component';
 import { OrdersComponent } from '../orders/orders.component';
 import { RootComponent } from '../root/root.component';
 import { SharedModule } from '../shared/shared.module';
 import { RootModule } from '../root/root.module';
+import { PurchaseComponent } from '../purchase/purchase.component';
 
 const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'purchase',
+    component: PurchaseComponent
   },
   {
     path: '',
