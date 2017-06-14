@@ -136,13 +136,16 @@ export class OfferComponent implements OnDestroy, OnInit {
     this.subscriptions.push(
       this.form.controls.zipcode.valueChanges
         .debounceTime(300)
-        .filter(() => this.form.controls.zipcode.valid)
         .subscribe((zipCode: string) => {
-          this.purchaseService.findCity(zipCode)
-            .then((cityResponse: CityResponse) => {
-              this.city = cityResponse;
-              this.form.controls.city.setValue(this.city.city);
-            });
+          if (this.form.controls.zipcode.valid) {
+            this.purchaseService.findCity(zipCode)
+              .then((cityResponse: CityResponse) => {
+                this.city = cityResponse;
+                this.form.controls.city.setValue(this.city.city);
+              });
+          } else {
+            this.form.controls.city.setValue(null);
+          }
         })
     );
   }
