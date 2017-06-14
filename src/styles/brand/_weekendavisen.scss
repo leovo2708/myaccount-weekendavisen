@@ -15,8 +15,17 @@ $utility-color-light: #f0f0f0;
 $form-color-accent: #201748;
 $form-color-warn: #c80000;
 $form-color-disabled: #7F7F7F;
-$form-color-light: #D3D3D3;
+$form-color-light: #DDD;
+$form-color-light2: #D3D3D3;
 $form-color-very-light: #F8F4F4;
+
+
+// fonts
+$font-size: 16px;
+$font-size-sm: 14px;
+$font-size-xs: 11px;
+
+$form-font-size: 13px;
 
 
 // @deprecated material-specific
@@ -37,3 +46,8 @@ $wea-app-theme: mat-light-theme($wea-app-primary, $wea-app-accent, $wea-app-warn
 
 // logo
 $logo-url: '/assets/weekendavisen_logo.png';
+
+
+// other
+$transition-normal: ease-out 200ms;
+$media-breakpoint-tablet: 797px;

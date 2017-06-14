@@ -1,0 +1,127 @@
+@import 'branding.scss';
+
+@mixin shared-settings {
+  padding: 9px 10px 10px;
+  color: $text-color-heavy;
+  border-color: $form-color-light;
+  letter-spacing: normal;
+  font: {
+    family: inherit;
+    size: $form-font-size;
+  }
+
+  &:hover {
+    border-color: $form-color-accent;
+  }
+};
+
+@media (min-width: $media-breakpoint-tablet) {
+  .form-group {
+    display: flex;
+  }
+}
+
+input[type="text"], input[type="password"], select {
+  @include shared-settings;
+
+  flex-grow: 1;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 10px 0 5px;
+
+  background: #fff;
+  border: {
+    radius: 2px;
+    style: solid;
+    width: 1px;
+  }
+
+  transition: border $transition-normal,
+  color $transition-normal,
+  box-shadow $transition-normal;
+
+  &.sm {
+    @media (min-width: $media-breakpoint-tablet) {
+      flex-grow: 0;
+      width: 96px;
+      min-width: initial;
+      margin-right: 30px;
+    }
+  }
+
+  &:focus {
+    border-color: $form-color-accent;
+    box-shadow: 0 2px 4px 0 rgba(#000, 0.09);
+    outline: none;
+  }
+
+  &:disabled {
+    color: $form-color-light;
+    border-color: $form-color-light;
+  }
+
+  &.enabled-look:disabled {
+    color: $text-color-heavy;
+  }
+
+  &:placeholder-shown, &:-ms-input-placeholder {
+    color: $text-color-heavy;
+  }
+
+  &.warn {
+    border-color: $form-color-warn;
+    color: $form-color-warn;
+  }
+}
+
+input[type="password"] {
+  padding: 1px 10px 0;
+
+  color: $form-color-accent;
+  border-color: $form-color-accent;
+  letter-spacing: 2px;
+  font: {
+    family: Verdana, sans-serif;
+    size: 1.8em;
+  }
+
+  &:placeholder-shown {
+    @include shared-settings;
+  }
+
+  &:-ms-input-placeholder {
+    font-size: inherit;
+    letter-spacing: normal;
+    padding: 9px 10px 10px;
+  }
+}
+
+button {
+  padding: 11px 0;
+  width: 100%;
+
+  border: 1px solid $color-secondary;
+  border-radius: 2px;
+  text-align: center;
+  font-size: $font-size;
+  font-weight: bold;
+  color: #fff;
+  background-color: $color-secondary;
+
+  cursor: pointer;
+
+  transition: border $transition-normal;
+
+  @media (min-width: $media-breakpoint-tablet) {
+    width: 150px;
+  }
+
+  &:hover, &:active, &:focus {
+    outline: none;
+    border-color: $form-color-accent;
+  }
+
+  &:focus {
+    box-shadow: 0 2px 4px 0 rgba(#000, 0.09);
+  }
+}

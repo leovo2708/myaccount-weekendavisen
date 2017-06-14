@@ -29,9 +29,11 @@ header {
 }
 
 .main {
-  padding: 25px;
-
   background: $background-color;
+
+  @media (min-width: $media-breakpoint-tablet) {
+    padding: 25px;
+  }
 }
 
 .sub-main {

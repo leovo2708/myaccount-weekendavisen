@@ -118,3 +118,18 @@ export interface Accounts {
   showScreenSet(params: ShowScreenSetParams): void;
   logout(params: LogoutParams): void;
 }
+
+export interface FindUserQueryResult {
+  UID: string;
+}
+
+export interface FindUserResponse {
+  results: FindUserQueryResult[];
+  objectsCount: number;
+  totalCount: number;
+  statusCode: number;
+  errorCode: number;
+  statusReason: string;
+  callId: string;
+  time: string;
+}

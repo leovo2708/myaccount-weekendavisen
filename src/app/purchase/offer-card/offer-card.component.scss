@@ -1,0 +1,15 @@
+@import '../../../styles/branding';
+
+.card {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 25px 15px;
+
+  font-size: $font-size-sm;
+  line-height: 1.45em;
+  background: $utility-color-light;
+
+  @media (min-width: $media-breakpoint-tablet) {
+    width: 275px;
+  }
+}

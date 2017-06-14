@@ -2,8 +2,10 @@ import { Http } from '../utils/http';
 import { RichResult } from '../../../d/http';
 import {
   ChangeAddressPayload, OrderFull, OrdersResponse, ResponseStatus, UserProfile,
-  FAQ, EPaper, SuspendOrderPayload, SuspendOrderResponse
+  FAQ, EPaper, SuspendOrderPayload, SuspendOrderResponse, Offer, CreateOrderResponse, CityResponse, CreateUserResponse, CreateOrderPayload
 } from '../../../d/kundeunivers';
+import { Request } from 'hapi';
+import { JWT } from '../jwt';
 
 export class Kundeunivers {
   private static http: Http = new Http(process.env.KU_APPLICATION_URL, true);
@@ -12,8 +14,28 @@ export class Kundeunivers {
     return this.http.post(`/my/account/${userId}/order/${orderId}/change-address.json`, data);
   }
 
+  public static createUser(email: string): Promise<RichResult<CreateUserResponse>> {
+    return this.http.post('/my/account.json', {email});
+  }
+
+  public static createOrder(userId: string, data: CreateOrderPayload): Promise<RichResult<CreateOrderResponse>> {
+    return this.http.post(`/my/account/${userId}/order.json`, data);
+  }
+
+  public static findCity(zipCode: string): Promise<RichResult<CityResponse>> {
+    return this.http.get(`/my/city/${zipCode}.json`);
+  }
+
+  public static getUIDFromRequest(request: Request): string {
+    return JWT.getAuthTicket(request.headers.authorization).accountInfo.UID;
+  }
+
   public static getEPaper(): Promise<RichResult<EPaper>> {
     return this.http.get('/my/epaper/weekendavisen');
+  }
+
+  public static getOffer(offerId: string): Promise<RichResult<Offer>> {
+    return this.http.get(`/my/offer/${offerId}.json`);
   }
 
   public static getUserOrders(userId: string): Promise<RichResult<OrdersResponse>> {

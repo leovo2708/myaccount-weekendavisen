@@ -24,17 +24,5 @@ export function UserRoutes(server: Server, options: {}, next: Function): void {
     }
   });
 
-  server.route({
-    method: 'GET',
-    path: '/me',
-    handler: (request: Request, reply: Base_Reply): void => {
-      BPC.me(JWT.getAuthTicket(request.headers.authorization).bpcTicket)
-        .then((result: Result) => {
-          reply(result.body);
-        })
-        .catch((result: Result) => reply(HttpHelper.wrapError(result)));
-    }
-  });
-
   next();
 }

@@ -1,0 +1,7 @@
+<div class="container"
+     [hidden]="!(isVisible | async)"
+     [ngStyle]="positionStyles">
+  <div class="item"
+       *ngFor="let item of filteredItems | async"
+      (click)="selectItem(item)">{{item}}</div>
+</div>

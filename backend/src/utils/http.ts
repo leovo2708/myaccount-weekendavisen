@@ -9,10 +9,12 @@ import { Result, RichResult } from '../../../d/http';
 export class Http {
   apiUrl: string;
   logCalls: boolean;
+  transform: boolean;
 
-  constructor(apiUrl: string, logCalls: boolean = false) {
+  constructor(apiUrl: string, logCalls: boolean = false, transform: boolean = false) {
     this.apiUrl = apiUrl;
     this.logCalls = logCalls;
+    this.transform = transform;
   }
 
   get(path: string, params?: any, credentials?: BaseTicket): Promise<any> {
@@ -59,16 +61,29 @@ export class Http {
         if (error) {
           reject({error});
         } else {
+          const result: RichResult<any> = {
+            response,
+            body: this.getTransformedBody(body)
+          };
+
           this.logCall(method, response, uri);
 
           if (response && response.statusCode > 399) {
-            reject({response, body});
+            reject(result);
           } else {
-            fulfill({response, body});
+            fulfill(result);
           }
         }
       });
     });
+  }
+
+  private getTransformedBody(body: any): any {
+    if (this.transform) {
+      return JSON.parse(body);
+    }
+
+    return body;
   }
 
   private logCall(method: string, response: IncomingMessage, uri: string): void {

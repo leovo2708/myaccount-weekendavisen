@@ -1,0 +1,55 @@
+@import '../../styles/branding';
+
+.container {
+  position: relative;
+
+  /deep/ input {
+    position: relative;
+    z-index: 1;
+
+    width: 16px;
+    height: 16px;
+    opacity: 0;
+  }
+
+  .fake-checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 16px;
+    height: 16px;
+
+    position: absolute;
+    top: 0;
+    box-sizing: border-box;
+
+    background: $form-color-very-light;
+    border: 1px solid $form-color-light;
+    border-radius: 2px;
+
+    transition: border $transition-normal, background $transition-normal;
+  }
+
+  /deep/ input:checked + .fake-checkbox {
+    border-color: $color-secondary;
+    background-color: $color-secondary;
+
+    .check-icon {
+      display: block;
+    }
+  }
+
+  /deep/ input:hover, /deep/ input:focus {
+    & + .fake-checkbox {
+      border-color: $form-color-disabled;
+    }
+  }
+
+  /deep/ input:disabled + .fake-checkbox {
+    border-color: $form-color-light2;
+  }
+
+  .check-icon {
+    display: none;
+  }
+}

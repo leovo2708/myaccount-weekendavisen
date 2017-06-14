@@ -1,0 +1,70 @@
+@import '../../../styles/branding';
+
+.offer-details {
+  order: 2;
+}
+
+@media (min-width: $media-breakpoint-tablet) {
+  .offer-details {
+    margin-top: 70px;
+  }
+
+  .page-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.form {
+  max-width: 430px;
+  padding: 0 40px;
+  margin: auto;
+
+  order: 1;
+
+  @media (min-width: $media-breakpoint-tablet) {
+    max-width: initial;
+    width: 430px;
+    margin: 0;
+    padding: 0;
+  }
+
+  h4 {
+    color: $text-color-secondary;
+    text-align: center;
+    font-weight: bold;
+    font-size: $font-size;
+  }
+}
+
+.disclaimer {
+  display: flex;
+  margin-top: 20px;
+
+  color: $text-color-secondary;
+  font-size: $font-size-xs;
+
+  .checkbox {
+    flex-shrink: 0;
+    margin: 0 10px 0 0;
+  }
+
+  .disclaimer-text {
+    margin: 0;
+  }
+}
+
+.form-footer {
+  margin-top: 20px;
+
+  @media (min-width: $media-breakpoint-tablet) {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
+
+.form-error {
+  font-size: $font-size-xs;
+  margin-right: 10px;
+}
