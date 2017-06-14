@@ -61,14 +61,11 @@ export class Http {
         if (error) {
           reject({error});
         } else {
-          const result: RichResult<any> = {
-            response,
-            body: this.getTransformedBody(body)
-          };
+          const result: RichResult<any> = this.getResult(response, body);
 
-          this.logCall(method, response, uri);
+          this.logCall(method, result.response, uri);
 
-          if (response && response.statusCode > 399) {
+          if (result.response && result.response.statusCode > 399) {
             reject(result);
           } else {
             fulfill(result);
@@ -78,7 +75,21 @@ export class Http {
     });
   }
 
-  private getTransformedBody(body: any): any {
+  private getResult(response: IncomingMessage, body: any): RichResult<any> {
+    try {
+      return {
+        response,
+        body: this.getBody(body)
+      };
+    } catch (e) {
+      return {
+        response: Object.assign({}, response, {statusCode: 500}),
+        body
+      };
+    }
+  }
+
+  private getBody(body: any): any {
     if (this.transform) {
       return JSON.parse(body);
     }

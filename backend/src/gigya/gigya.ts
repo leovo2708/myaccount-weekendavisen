@@ -21,7 +21,7 @@ export class Gigya {
     }));
   }
 
-  public static getUserIdOrCreate(email: string): Promise<string> {
+  public static createUser(email: string): Promise<string> {
     return Gigya.findUser(email)
       .then((result: RichResult<FindUserResponse>) => {
         if (result.body.totalCount) {

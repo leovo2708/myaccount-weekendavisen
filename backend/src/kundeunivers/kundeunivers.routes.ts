@@ -72,7 +72,7 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
       auth: false
     },
     handler: (request: Request, reply: Base_Reply): void => {
-      Gigya.getUserIdOrCreate(request.payload.email)
+      Gigya.createUser(request.payload.email)
         .then((userId: string) => Kundeunivers.createOrder(userId, request.payload))
         .then((result: RichResult<CreateOrderResponse>) => reply(result.body))
         .catch((result: Result) => reply(HttpHelper.wrapError(result)));
