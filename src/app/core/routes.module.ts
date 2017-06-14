@@ -13,6 +13,7 @@ import { RootComponent } from '../root/root.component';
 import { SharedModule } from '../shared/shared.module';
 import { RootModule } from '../root/root.module';
 import { PurchaseComponent } from '../purchase/purchase.component';
+import { OfferComponent } from '../purchase/offer/offer.component';
 
 const routes: Routes = [
   {
@@ -21,7 +22,10 @@ const routes: Routes = [
   },
   {
     path: 'purchase',
-    component: PurchaseComponent
+    component: PurchaseComponent,
+    children: [
+      {path: ':offerIdList', component: OfferComponent}
+    ]
   },
   {
     path: '',

@@ -1,0 +1,16 @@
+@import '../../../styles/branding';
+
+.form-control-message {
+  margin-left: 10px;
+
+  font-size: $font-size-xs;
+  color: $text-color-heavy;
+
+  &.warn {
+    color: $form-color-warn;
+  }
+
+  &.info {
+    color: $form-color-light2;
+  }
+}

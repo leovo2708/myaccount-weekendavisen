@@ -1,0 +1,16 @@
+.fill {
+  &.default {
+    fill: #000;
+  }
+
+  &.light {
+    fill: #fff;
+  }
+
+}
+
+.svg {
+  &.small {
+    transform: scale(0.77);
+  }
+}

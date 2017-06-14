@@ -2,14 +2,26 @@ import { Base_Reply, Request, Server } from 'hapi';
 
 import { Kundeunivers } from './kundeunivers';
 import {
-  OrderFull, OrdersResponse, RemoveOrderResponse, UserProfile, FAQ, EPaper
+  OrderFull, OrdersResponse, RemoveOrderResponse, UserProfile, FAQ, EPaper, CreateOrderResponse, Offer, CityResponse
 } from '../../../d/kundeunivers';
-import { AuthTicket } from '../../../d/auth';
-import { JWT } from '../jwt';
 import { Result, RichResult } from '../../../d/http';
 import { HttpHelper } from '../utils/http.helper';
+import { Gigya } from '../gigya/gigya';
 
 export function KundeuniversRoutes(server: Server, options: {}, next: Function): void {
+  server.route({
+    method: 'GET',
+    path: '/city/{zipCode}',
+    config: {
+      auth: false
+    },
+    handler: (request: Request, reply: Base_Reply): void => {
+      Kundeunivers.findCity(request.params.zipCode)
+        .then((result: RichResult<CityResponse>) => reply(result.body))
+        .catch((result: Result) => reply(HttpHelper.wrapError(result)));
+    }
+  });
+
   server.route({
     method: 'GET',
     path: '/epaper',
@@ -32,12 +44,37 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
 
   server.route({
     method: 'GET',
+    path: '/offers/{offerId}',
+    config: {
+      auth: false
+    },
+    handler: (request: Request, reply: Base_Reply): void => {
+      Kundeunivers.getOffer(request.params.offerId)
+        .then((result: RichResult<Offer>) => reply(result.body))
+        .catch((result: Result) => reply(HttpHelper.wrapError(result)));
+    }
+  });
+
+  server.route({
+    method: 'GET',
     path: '/orders',
     handler: (request: Request, reply: Base_Reply): void => {
-      const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
-
-      Kundeunivers.getUserOrders(authTicket.accountInfo.UID)
+      Kundeunivers.getUserOrders(Kundeunivers.getUIDFromRequest(request))
         .then((result: RichResult<OrdersResponse>) => reply(result.body))
+        .catch((result: Result) => reply(HttpHelper.wrapError(result)));
+    }
+  });
+
+  server.route({
+    method: 'POST',
+    path: '/orders',
+    config: {
+      auth: false
+    },
+    handler: (request: Request, reply: Base_Reply): void => {
+      Gigya.createUser(request.payload.email)
+        .then((userId: string) => Kundeunivers.createOrder(userId, request.payload))
+        .then((result: RichResult<CreateOrderResponse>) => reply(result.body))
         .catch((result: Result) => reply(HttpHelper.wrapError(result)));
     }
   });
@@ -46,9 +83,7 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
     method: 'GET',
     path: '/orders/{orderId}',
     handler: (request: Request, reply: Base_Reply): void => {
-      const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
-
-      Kundeunivers.getUserOrder(authTicket.accountInfo.UID, request.params.orderId)
+      Kundeunivers.getUserOrder(Kundeunivers.getUIDFromRequest(request), request.params.orderId)
         .then((result: RichResult<OrderFull>) => reply(result.body))
         .catch((result: Result) => reply(HttpHelper.wrapError(result)));
     }
@@ -58,9 +93,7 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
     method: 'PUT',
     path: '/orders/{orderId}/address',
     handler: (request: Request, reply: Base_Reply): void => {
-      const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
-
-      Kundeunivers.changeAddress(authTicket.accountInfo.UID, request.params.orderId, request.payload)
+      Kundeunivers.changeAddress(Kundeunivers.getUIDFromRequest(request), request.params.orderId, request.payload)
         .then(() => reply(request.payload).code(202))
         .catch((result: Result) => reply(HttpHelper.wrapError(result)));
     }
@@ -70,9 +103,7 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
     method: 'DELETE',
     path: '/orders/{orderId}',
     handler: (request: Request, reply: Base_Reply): void => {
-      const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
-
-      Kundeunivers.removeOrder(authTicket.accountInfo.UID, request.params.orderId)
+      Kundeunivers.removeOrder(Kundeunivers.getUIDFromRequest(request), request.params.orderId)
         .then((result: RichResult<RemoveOrderResponse>) => reply(result.body))
         .catch((result: Result) => reply(HttpHelper.wrapError(result)));
     }
@@ -82,9 +113,7 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
     method: 'PUT',
     path: '/orders/{orderId}/suspend',
     handler: (request: Request, reply: Base_Reply): void => {
-      const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
-
-      Kundeunivers.suspendOrder(authTicket.accountInfo.data.sso_uid, request.params.orderId, request.payload)
+      Kundeunivers.suspendOrder(Kundeunivers.getUIDFromRequest(request), request.params.orderId, request.payload)
         .then(() => reply(request.payload).code(202))
         .catch((result: Result) => reply(HttpHelper.wrapError(result)));
     }
@@ -94,9 +123,7 @@ export function KundeuniversRoutes(server: Server, options: {}, next: Function):
     method: 'GET',
     path: '/user',
     handler: (request: Request, reply: Base_Reply): void => {
-      const authTicket: AuthTicket = JWT.getAuthTicket(request.headers.authorization);
-
-      Kundeunivers.getUserProfile(authTicket.accountInfo.UID)
+      Kundeunivers.getUserProfile(Kundeunivers.getUIDFromRequest(request))
         .then((result: RichResult<UserProfile>) => reply(result.body))
         .catch((result: Result) => reply(HttpHelper.wrapError(result)));
     }
