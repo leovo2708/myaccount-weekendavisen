@@ -3,9 +3,10 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { PurchaseService } from '../purchase.service';
-import { CityResponse, CreateOrderResponse, CreateOrderPayload, Offer, OffersResponse } from '../../../../d/kundeunivers';
+import { CityResponse, CreateOrderResponse, Offer, OffersResponse } from '../../../../d/kundeunivers';
 import { WindowRef } from '../../common/window-ref';
 import { Subscription } from 'rxjs/Subscription';
+import { OfferService } from './offer.service';
 
 @Component({
   selector: 'app-offer',
@@ -20,6 +21,7 @@ export class OfferComponent implements OnDestroy, OnInit {
   subscriptions: Subscription[] = [];
 
   constructor(private fb: FormBuilder,
+              private offerService: OfferService,
               private purchaseService: PurchaseService,
               private route: ActivatedRoute,
               private windowRef: WindowRef) {
@@ -30,20 +32,6 @@ export class OfferComponent implements OnDestroy, OnInit {
       this.offers.length &&
       this.form.controls.offer_id.value &&
       this.offers.find((offer: Offer) => offer.offer_id === this.form.controls.offer_id.value);
-  }
-
-  getParsedFormValue(form: FormGroup): CreateOrderPayload {
-    return {
-      firstname: form.controls.firstname.value,
-      lastname: form.controls.lastname.value,
-      zipcode: form.controls.zipcode.value,
-      city: form.controls.city.value,
-      email: form.controls.email.value,
-      phone: form.controls.phone.value,
-      terms: form.controls.terms.value,
-      offer_id: form.controls.offer_id.value,
-      ...this.parseAddress(form.controls.address.value)
-    };
   }
 
   ngOnDestroy(): void {
@@ -70,34 +58,6 @@ export class OfferComponent implements OnDestroy, OnInit {
     });
   }
 
-  parseAddress(address: string): any {
-    const [street, addressParts] = this.parseStreetName(address);
-    const addressPartsMatch: RegExpMatchArray = addressParts
-      .match(/\u0020?([0-9]{0,3})\u0020?([A-Z1-9])?\u0020?([0-9]{0,2})?\u0020?([0-9]{0,4}|[A-Z]{1,4})?/i);
-
-    return {
-      street,
-      number: addressPartsMatch[1],
-      letter: addressPartsMatch[2],
-      floor: addressPartsMatch[3],
-      side: addressPartsMatch[4]
-    };
-  }
-
-  parseStreetName(address: string): string[] {
-    const addressTrimmed: string = address.trim();
-    const foundStreetName: string = this.city.streets.find((street: string) => addressTrimmed.indexOf(street) === 0);
-
-    if (foundStreetName) {
-      return [
-        foundStreetName,
-        addressTrimmed.replace(foundStreetName, '').trim()
-      ];
-    }
-
-    return null;
-  }
-
   selectOffer(offerIdToSelect: string): void {
     this.form.controls.offer_id.setValue(
       this.offers
@@ -108,7 +68,7 @@ export class OfferComponent implements OnDestroy, OnInit {
 
   submitForm(form: FormGroup): void {
     if (form.valid) {
-      this.purchaseService.createOrder(this.getParsedFormValue(form))
+      this.purchaseService.createOrder(this.offerService.getParsedFormValue(form, this.city.streets))
         .then((response: CreateOrderResponse) => {
           this.windowRef.redirectTo(response.url);
         });

@@ -30,7 +30,7 @@
         <option *ngFor="let offer of offers" [value]="offer.offer_id">{{offer.frequency_text}}</option>
       </select>
       <label class="disclaimer">
-        <input *appCheckbox type="checkbox" formControlName="terms" class="checkbox" required>
+        <input *appCheckbox type="checkbox" formControlName="terms" class="checkbox">
         <span class="disclaimer-text">Jeg accepterer abonnementsbetingelserne for Weekendavisen</span>
       </label>
       <label class="disclaimer" *ngIf="offerPreview?.settings?.registration_checkbox">

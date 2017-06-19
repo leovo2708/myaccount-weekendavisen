@@ -44,7 +44,7 @@ input[type="text"], input[type="password"], select {
     @media (min-width: $media-breakpoint-tablet) {
       flex-grow: 0;
       width: 96px;
-      min-width: initial;
+      min-width: 0;
       margin-right: 30px;
     }
   }
