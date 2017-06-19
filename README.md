@@ -24,6 +24,16 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 Before running the tests make sure you are serving the app via `ng serve`.
 
+## Run with different host header
+
+To be able to run the client using JavaScript with whitelisted origin header, e.g. use Gigya Web SDK locally with a test/stage/prod API Key, the client must accept a different host header (site URL).
+
+After adding the hostname in your operation systems _hosts_-file, start the client with parameter `--disable-host-check`. Example:
+
+```
+ng serve --disable-host-check
+```
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
