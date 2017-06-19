@@ -10,6 +10,7 @@ import { CheckboxModule } from '../checkbox/checkbox.module';
 import { FormControlModule } from '../form-control/form-control.module';
 import { AutoCompleteModule } from '../auto-complete/auto-complete.module';
 import { WindowRef } from '../common/window-ref';
+import { OfferService } from './offer/offer.service';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { WindowRef } from '../common/window-ref';
     PurchaseComponent
   ],
   providers: [
+    OfferService,
     PurchaseService,
     WindowRef
   ]
