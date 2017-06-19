@@ -53,6 +53,7 @@
     "hapi": "16.1.1",
     "hapi-auth-jwt2": "7.2.4",
     "hawk": "6.0.1",
+    "http-server": "0.10.0",
     "inert": "4.2.0",
     "jsonwebtoken": "7.4.0",
     "lodash": "4.17.4",

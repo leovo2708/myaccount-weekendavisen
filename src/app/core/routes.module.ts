@@ -50,7 +50,7 @@ const routes: Routes = [
   imports: [
     LoginModule,
     RootModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {useHash: true}),
     SharedModule
   ],
   providers: [
