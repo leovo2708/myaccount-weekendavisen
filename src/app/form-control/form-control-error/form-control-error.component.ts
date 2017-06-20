@@ -6,26 +6,53 @@ import { FormControl } from '@angular/forms';
   templateUrl: './form-control-error.component.html'
 })
 export class FormControlErrorComponent {
-  _alwaysShow: boolean;
-
   @Input() formInput: FormControl;
+
+  /**
+   * This input represents an array of error names that this components should react on (i.e. show the message).
+   *
+   * It accepts an array of strings, e.g. [errors]="['required', 'email']".
+   *
+   * By default it will equal to errors="required"
+   *
+   * You can also pass a string which will be converted into a single-item array, e.g. errors="required"
+   * will be the same as [errors]="['required']".
+   *
+   * Array of error names will be matched with an OR operator, that means ANY of the
+   * name must be present in the form control's errors list to show the error message.
+   *
+   * Instead of an error name you can pass a comma separated names, e.g. errors='required,email' - in such case
+   * those 2 errors will be compared with an AND operator, that means ALL of the comma separated
+   * items must be present in the form control errors list to show the error message.
+   *
+   * Every error name can be preceded with "!" to achieve a NOT comparison, e.g. you can pass errors="!required,email"
+   * to show the message every time the "required" validator is NOT true AND "email" validator IS true.
+   */
   @Input() errors: string | string[];
 
-  @Input() set alwaysShow(value: string | boolean) {
-    this._alwaysShow = value === '' || !!value;
+  errorsMatch(): boolean {
+    const errorsArray: string[] = this.getErrorsArray();
+
+    return errorsArray.reduce((lastError: boolean, errorNameGroup: string) => {
+      return lastError || this.errorGroupMatches(errorNameGroup);
+    }, false);
   }
 
-  get alwaysShow(): string | boolean {
-    return this._alwaysShow;
+  errorGroupMatches(errorNameGroup: string): boolean {
+    return errorNameGroup
+      .split(',')
+      .reduce((subError: boolean, subErrorName: string) => {
+        if (subErrorName.indexOf('!') === 0) {
+          return subError && !this.formInput.hasError(subErrorName.substr(1));
+        }
+
+        return subError && this.formInput.hasError(subErrorName);
+      }, true);
   }
 
-  isVisible(): boolean {
-    return this.formInput.touched && this.formInput.invalid && this.hasErrors();
-  }
-
-  get errorsArray(): string[] {
+  getErrorsArray(): string[] {
     if (!this.errors) {
-      return [];
+      return ['required'];
     }
 
     if (Array.isArray(this.errors)) {
@@ -35,22 +62,7 @@ export class FormControlErrorComponent {
     return [this.errors];
   }
 
-  hasErrors(): boolean {
-    const errorsArray: string[] = this.errorsArray;
-
-    if (this.alwaysShow) {
-      return this.errorsArray
-        .map((error: string) => this.formInput.hasError(error))
-        .reduce((lastError: boolean, thisError: boolean) => lastError && thisError, true);
-    }
-
-    return Object.keys(this.formInput.errors)
-      .reduce((lastError: boolean, errorName: string) => {
-        if (errorsArray.includes(errorName)) {
-          return lastError && this.formInput.hasError(errorName);
-        }
-
-        return lastError && !this.formInput.hasError(errorName);
-      }, true);
+  isVisible(): boolean {
+    return this.formInput.touched && this.formInput.invalid && this.errorsMatch();
   }
 }

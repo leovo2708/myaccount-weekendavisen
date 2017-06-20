@@ -37,36 +37,28 @@ describe('FormControlErrorComponent', () => {
     expect(page.messageElementExists).toBeFalsy();
   });
 
-  it('should not show error if other validators are invalid', () => {
-    page.setFormInput('', [Validators.required, Validators.email, Validators.minLength(2)]);
+  it('should work with multiple error names', () => {
+    page.setFormInput('', Validators.required, Validators.email, Validators.minLength(2));
     page.touchFormInput();
+
     page.errors = 'email';
-
-    expect(page.messageElementExists).toBeFalsy();
-
-    page.errors = ['required', 'minlength'];
-
-    expect(page.messageElementExists).toBeFalsy();
-  });
-
-  it('should show the error if other validators are valid', () => {
-    page.setFormInput('ab', [Validators.required, Validators.email, Validators.minLength(2)]);
-    page.touchFormInput();
-    page.errors = 'email';
-
     expect(page.messageElementExists).toBeTruthy();
 
-    page.errors = ['email', 'minlength'];
-
-    expect(page.messageElementExists).toBeTruthy()
-  });
-
-  it('should show the error if other validators are invalid but the base one has "alwaysShow" property', () => {
-    page.setFormInput('', [Validators.required, Validators.email, Validators.minLength(2)]);
-    page.touchFormInput();
-    page.setAlwaysShow('');
-    page.errors = 'required';
-
+    page.errors = ['required', 'email'];
     expect(page.messageElementExists).toBeTruthy();
+
+    page.errors = ['required,email'];
+    expect(page.messageElementExists).toBeTruthy();
+
+    page.errors = ['!required,email'];
+    expect(page.messageElementExists).toBeFalsy();
+
+    page.setFormInput('a', Validators.required, Validators.email, Validators.minLength(2));
+
+    page.errors = ['required,email'];
+    expect(page.messageElementExists).toBeFalsy();
+
+    page.errors = ['!required,email'];
+    expect(page.messageElementExists).toBeFalsy();
   });
 });

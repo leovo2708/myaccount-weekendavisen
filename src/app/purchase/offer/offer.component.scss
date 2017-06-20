@@ -6,7 +6,7 @@
 
 @media (min-width: $media-breakpoint-tablet) {
   .offer-details {
-    margin-top: 70px;
+    margin-top: 30px;
   }
 
   .page-wrapper {
@@ -18,7 +18,7 @@
 .form {
   max-width: 430px;
   padding: 0 40px;
-  margin: auto;
+  margin: 28px auto 0;
 
   order: 1;
 
@@ -37,25 +37,12 @@
   }
 }
 
-.disclaimer {
-  display: flex;
-  margin-top: 20px;
-
-  color: $text-color-secondary;
-  font-size: $font-size-xs;
-
-  .checkbox {
-    flex-shrink: 0;
-    margin: 0 10px 0 0;
-  }
-
-  .disclaimer-text {
-    margin: 0;
-  }
+.disclaimers {
+  margin: 15px 0 0;
 }
 
 .form-footer {
-  margin-top: 20px;
+  margin-top: 8px;
 
   @media (min-width: $media-breakpoint-tablet) {
     display: flex;

@@ -11,16 +11,12 @@ export class FormControlErrorPage extends TestingPage<FormControlErrorComponent>
     return this.debugElement.query(By.css('app-form-control-message')) !== null;
   }
 
-  setFormInput(value: string, validators: ValidatorFn | ValidatorFn[]): void {
+  setFormInput(value: string, ...validators: ValidatorFn[]): void {
     this.component.formInput = new FormControl(value, validators);
   }
 
   touchFormInput(): void {
     this.component.formInput.markAsTouched();
-  }
-
-  setAlwaysShow(value: string | boolean): void {
-    this.component.alwaysShow = value;
   }
 
   set errors(errors: string | string[]) {

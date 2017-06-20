@@ -4,39 +4,41 @@
     <h4>Indtast oplysninger</h4>
     <form [formGroup]="form" (submit)="submitForm(form)">
       <input type="text" formControlName="firstname" placeholder="Fornavn" appFormControlError>
-      <app-form-control-error [formInput]="form.get('firstname')" errors="required">First name is required</app-form-control-error>
+      <app-form-control-error [formInput]="form.get('firstname')">First name is required</app-form-control-error>
 
       <input type="text" formControlName="lastname" placeholder="Efternavn" appFormControlError>
-      <app-form-control-error [formInput]="form.get('lastname')" errors="required">Last name is required</app-form-control-error>
+      <app-form-control-error [formInput]="form.get('lastname')">Last name is required</app-form-control-error>
 
       <input type="text" formControlName="address" placeholder="Adresse" appAutoComplete [items]="city?.streets" appFormControlError>
-      <app-form-control-error [formInput]="form.get('address')" errors="required">Address is required</app-form-control-error>
+      <app-form-control-error [formInput]="form.get('address')">Address is required</app-form-control-error>
 
       <div class="form-group">
         <input type="text" class="sm" formControlName="zipcode" placeholder="Postnr." appFormControlError>
         <input type="text" formControlName="city" placeholder="By" class="enabled-look">
       </div>
-      <app-form-control-error [formInput]="form.get('zipcode')" errors="required">Zip code is required</app-form-control-error>
+      <app-form-control-error [formInput]="form.get('zipcode')">Zip code is required</app-form-control-error>
 
       <input type="text" formControlName="email" placeholder="Email" appFormControlError>
-      <app-form-control-error [formInput]="form.get('email')" errors="required" alwaysShow>E-mail is required</app-form-control-error>
-      <app-form-control-error [formInput]="form.get('email')" errors="email">Please enter a valid e-mail address</app-form-control-error>
+      <app-form-control-error [formInput]="form.get('email')" errors="required,email">E-mail is required</app-form-control-error>
+      <app-form-control-error [formInput]="form.get('email')" errors="!required,email">Please enter a valid e-mail address</app-form-control-error>
 
       <input type="text" formControlName="phone" placeholder="Telefon" appFormControlError>
-      <app-form-control-error [formInput]="form.get('phone')" errors="required">Phone is required</app-form-control-error>
-      <app-form-control-error [formInput]="form.get('phone')" errors="minlength">Phone must contain 8 numbers</app-form-control-error>
+      <app-form-control-error [formInput]="form.get('phone')">Phone is required</app-form-control-error>
+      <app-form-control-error [formInput]="form.get('phone')" [errors]="['minlength', 'maxlength']">Phone number must contain 8 numbers</app-form-control-error>
 
       <select formControlName="offer_id" appFormControlError>
         <option *ngFor="let offer of offers" [value]="offer.offer_id">{{offer.frequency_text}}</option>
       </select>
-      <label class="disclaimer">
-        <input *appCheckbox type="checkbox" formControlName="terms" class="checkbox">
-        <span class="disclaimer-text">Jeg accepterer abonnementsbetingelserne for Weekendavisen</span>
-      </label>
-      <label class="disclaimer" *ngIf="offerPreview?.settings?.registration_checkbox">
-        <input *appCheckbox type="checkbox" formControlName="promo_terms" class="checkbox" [required]="offerPreview.settings.registration_checkbox_settings.registration_checkbox_required">
-        <span class="disclaimer-text">{{offerPreview.settings.registration_checkbox_settings.registration_checkbox_text}}</span>
-      </label>
+      <div class="disclaimers">
+        <label class="checkbox checkbox-sm">
+          <input *appCheckbox type="checkbox" formControlName="terms">
+          Jeg accepterer abonnementsbetingelserne for Weekendavisen
+        </label>
+        <label class="checkbox checkbox-sm" *ngIf="offerPreview?.settings?.registration_checkbox">
+          <input *appCheckbox type="checkbox" formControlName="promo_terms" [required]="offerPreview.settings.registration_checkbox_settings.registration_checkbox_required">
+          {{offerPreview.settings.registration_checkbox_settings.registration_checkbox_text}}
+        </label>
+      </div>
       <div class="form-footer">
         <app-form-control-message class="form-error" *ngIf="formSubmittedInvalid" type="warn">Please fix the form errors</app-form-control-message>
         <button type="submit">Betal</button>
