@@ -21,12 +21,13 @@ export class FormControlErrorComponent {
    * Array of error names will be matched with an OR operator, that means ANY of the
    * name must be present in the form control's errors list to show the error message.
    *
-   * Instead of an error name you can pass a comma separated names, e.g. errors='required,email' - in such case
+   * Instead of an error name you can pass a comma separated names, e.g. errors="required,email" - in such case
    * those 2 errors will be compared with an AND operator, that means ALL of the comma separated
    * items must be present in the form control errors list to show the error message.
    *
-   * Every error name can be preceded with "!" to achieve a NOT comparison, e.g. you can pass errors="!required,email"
-   * to show the message every time the "required" validator is NOT true AND "email" validator IS true.
+   * Every error name can be preceded with "!" to achieve a NOT comparison, e.g. you can pass
+   * errors="!required,email" to show the message every time the "required" validator is NOT true AND "email"
+   * validator IS true.
    */
   @Input() errors: string | string[];
 
