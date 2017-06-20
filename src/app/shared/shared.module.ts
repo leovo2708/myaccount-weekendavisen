@@ -7,8 +7,10 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { JwtHelper } from 'angular2-jwt';
 import { DomUtilService } from '../common/dom-util.service';
+import { BoxModule } from '../box/box.module';
 
 const modules: any[] = [
+  BoxModule,
   BrowserAnimationsModule,
   BrowserModule,
   CommonModule,

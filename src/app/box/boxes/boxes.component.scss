@@ -1,0 +1,12 @@
+.boxes {
+  display: flex;
+  justify-content: center;
+
+  /deep/ app-box {
+    margin-left: 30px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
