@@ -3,6 +3,7 @@ import * as Inert from 'inert';
 import * as hapiAuthJwt2 from 'hapi-auth-jwt2';
 
 import { BPC } from './user/bpc';
+import configPlugin from './config/config.plugin';
 import kundeuniversPlugin from './kundeunivers/kundeunivers.plugin';
 import userPlugin from './user/user.plugin';
 import { preResponseExtension } from './pre-response.extension';
@@ -35,6 +36,7 @@ application.register(hapiAuthJwt2, (err: Error) => {
   application.auth.default('jwt');
 
   application.register(Inert, () => null);
+  application.register(configPlugin, <any>{routes: {prefix: '/config'}}, cb);
   application.register(kundeuniversPlugin, <any>{routes: {prefix: '/kundeunivers'}}, cb);
   application.register(userPlugin, <any>{routes: {prefix: '/user'}}, cb);
 });

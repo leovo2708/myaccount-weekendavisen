@@ -10,7 +10,7 @@ export class Gigya {
   private static getParams(params: any): any {
     return {
       ...params,
-      apiKey: process.env.GIGYA_API_KEY,
+      apiKey: process.env.GIGYA_USER_KEY,
       secret: process.env.GIGYA_SECRET
     };
   }
